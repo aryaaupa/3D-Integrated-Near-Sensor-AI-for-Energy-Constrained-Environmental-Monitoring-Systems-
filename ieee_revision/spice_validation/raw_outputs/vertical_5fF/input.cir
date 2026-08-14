@@ -1,0 +1,43 @@
+* vertical_5fF
+* Identical 45 nm CMOS driver/receiver; only interconnect R/C varies.
+.include model.pm
+
+.param VDDVAL=1.0
+.param RLINK=0.065
+.param CLINK=5.0f
+
+VDD vdd 0 DC {VDDVAL}
+VIN in 0 PULSE(0 {VDDVAL} 100p 20p 20p 480p 1n)
+
+* Output driver: Wp/Wn = 2, sized 8/4 um.
+MDRV_N link_src in 0 0 nmos L=45n W=4u
+MDRV_P link_src in vdd vdd pmos L=45n W=8u
+
+* Lumped link proxy.
+RLINK_ELEM link_src link {RLINK}
+CLINK_ELEM link 0 {CLINK}
+
+* Identical minimum-sized receiver with a transistor-level fanout-of-one load.
+MREC_N out link 0 0 nmos L=45n W=1u
+MREC_P out link vdd vdd pmos L=45n W=2u
+MLOAD_N out_load out 0 0 nmos L=45n W=1u
+MLOAD_P out_load out vdd vdd pmos L=45n W=2u
+
+.option temp=27 tnom=27 reltol=1e-4 abstol=1e-15 vntol=1e-6
+.tran 1p 3.1n
+
+* One steady-state 1 ns period contains one rising and one falling data toggle.
+.measure tran supply_charge_cycle INTEG I(VDD) FROM=1.05n TO=2.05n
+.measure tran propagation_rise TRIG V(in) VAL=0.5 RISE=2 TARG V(out) VAL=0.5 RISE=2
+.measure tran propagation_fall TRIG V(in) VAL=0.5 FALL=2 TARG V(out) VAL=0.5 FALL=2
+.measure tran link_fall_time TRIG V(link) VAL=0.9 FALL=2 TARG V(link) VAL=0.1 FALL=2
+.measure tran link_rise_time TRIG V(link) VAL=0.1 RISE=2 TARG V(link) VAL=0.9 RISE=2
+
+.control
+set filetype=ascii
+run
+wrdata waveform.txt time v(in) v(link) v(out) i(VDD)
+quit
+.endc
+
+.end

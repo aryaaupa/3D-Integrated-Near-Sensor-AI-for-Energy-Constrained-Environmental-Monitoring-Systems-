@@ -1,0 +1,46 @@
+case,metric,value,raw_source_file,extraction_method
+vertical_5fF,link_capacitance_fF,5,logs/run_manifest.csv,manifest parameter
+vertical_5fF,link_resistance_ohm,0.065,logs/run_manifest.csv,manifest parameter
+vertical_5fF,supply_energy_per_cycle_fJ,34.0161,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_5fF,supply_energy_per_toggle_fJ,17.00805,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_5fF,propagation_rise_ps,9.388543,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_5fF,propagation_fall_ps,9.995898,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_5fF,mean_propagation_delay_ps,9.6922205,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_5fF,link_rise_time_ps,7.642626,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_5fF,link_fall_time_ps,7.669869,raw_outputs/vertical_5fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,link_capacitance_fF,20,logs/run_manifest.csv,manifest parameter
+vertical_20fF,link_resistance_ohm,0.065,logs/run_manifest.csv,manifest parameter
+vertical_20fF,supply_energy_per_cycle_fJ,49.0232,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,supply_energy_per_toggle_fJ,24.5116,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,propagation_rise_ps,12.0743,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,propagation_fall_ps,12.15817,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,mean_propagation_delay_ps,12.116235,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,link_rise_time_ps,9.517341,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_20fF,link_fall_time_ps,10.09339,raw_outputs/vertical_20fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,link_capacitance_fF,40,logs/run_manifest.csv,manifest parameter
+vertical_40fF,link_resistance_ohm,0.065,logs/run_manifest.csv,manifest parameter
+vertical_40fF,supply_energy_per_cycle_fJ,69.1965,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,supply_energy_per_toggle_fJ,34.59825,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,propagation_rise_ps,14.94565,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,propagation_fall_ps,14.4051,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,mean_propagation_delay_ps,14.675375,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,link_rise_time_ps,12.07658,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_40fF,link_fall_time_ps,13.57172,raw_outputs/vertical_40fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,link_capacitance_fF,80,logs/run_manifest.csv,manifest parameter
+vertical_80fF,link_resistance_ohm,0.065,logs/run_manifest.csv,manifest parameter
+vertical_80fF,supply_energy_per_cycle_fJ,109.824,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,supply_energy_per_toggle_fJ,54.912,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,propagation_rise_ps,20.07815,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,propagation_fall_ps,18.20009,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,mean_propagation_delay_ps,19.13912,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,link_rise_time_ps,17.74768,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+vertical_80fF,link_fall_time_ps,21.00958,raw_outputs/vertical_80fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,link_capacitance_fF,160,logs/run_manifest.csv,manifest parameter
+planar_bump_160fF,link_resistance_ohm,0.065,logs/run_manifest.csv,manifest parameter
+planar_bump_160fF,supply_energy_per_cycle_fJ,190.978,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,supply_energy_per_toggle_fJ,95.489,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,propagation_rise_ps,29.69272,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,propagation_fall_ps,25.04152,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,mean_propagation_delay_ps,27.36712,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,link_rise_time_ps,29.95027,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion
+planar_bump_160fF,link_fall_time_ps,36.69257,raw_outputs/planar_bump_160fF/ngspice_stdout_stderr.txt,parsed ngspice .measure; deterministic unit conversion

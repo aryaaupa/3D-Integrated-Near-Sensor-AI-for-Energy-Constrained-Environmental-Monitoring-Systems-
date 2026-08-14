@@ -1,0 +1,12 @@
+GENERATED_UTC=2026-08-14T19:37:09Z
+OS=Ubuntu 24.04.3 LTS x86_64
+PYTHON=Python 3.12.13
+NGSPICE_PACKAGE_URL=https://archive.ubuntu.com/ubuntu/pool/universe/n/ngspice/ngspice_42+ds-3build1_amd64.deb
+NGSPICE_PACKAGE_SHA256=466c4c06418107ceaa9c9457065b3bb71a9d9dc5ec6fef186d7de9d5208ce8db
+LIBXFT_PACKAGE_URL=https://archive.ubuntu.com/ubuntu/pool/main/x/xft/libxft2_2.3.6-1build1_amd64.deb
+LIBXFT_PACKAGE_SHA256=b4f4f3255c0b8773b260c61cbe20ee7c63799cfc0e4e389fa58375dd480b093a
+PTM_MODEL_SOURCE_PAGE=https://mec.umn.edu/ptm
+PTM_MODEL_DIRECT_SOURCE=https://drive.usercontent.google.com/download?id=1H5eUrlxDpi2Sdmf5W9rCsjBRjttYPFZs&export=download&confirm=t
+PTM_MODEL_SHA256=c9ed2e513523c57a76912a35b2860cb85e4aaa3402b69757d84efa9cc2fb8410
+PARENT_ARCHITECTURAL_REMOTE_COMMIT=4291da55dc45f433f6836ec0b39e96b04ccc2068
+LOCAL_PARENT_TREE=5cefe1c03f98b6978e9cef4ae957281b72273f71
