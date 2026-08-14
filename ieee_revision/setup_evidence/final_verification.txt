@@ -1,0 +1,103 @@
+FRESH_VERIFICATION_TIMESTAMP_UTC=2026-08-14T17:41:07Z
+VIRTUAL_ENV=/workspace/scratch/ae4887560717/timeloop-env
+ACCELERGY_PATH=/workspace/scratch/ae4887560717/timeloop-env/bin/accelergy
+TIMELOOP_MODEL_PATH=/workspace/scratch/ae4887560717/timeloop-env/bin/timeloop-model
+TIMELOOP_MAPPER_PATH=/workspace/scratch/ae4887560717/timeloop-env/bin/timeloop-mapper
+
+===== COMMAND: accelergy -h =====
+2026-08-15 01:41:07 INFO            _                _                      
+2026-08-15 01:41:07 INFO           / \   ___ ___ ___| | ___ _ __ __ _ _   _ 
+2026-08-15 01:41:07 INFO          / _ \ / __/ __/ _ \ |/ _ \ '__/ _` | | | |
+2026-08-15 01:41:07 INFO         / ___ \ (_| (_|  __/ |  __/ | | (_| | |_| |
+2026-08-15 01:41:07 INFO        /_/   \_\___\___\___|_|\___|_|  \__, |\__, |
+2026-08-15 01:41:07 INFO                                        |___/ |___/ 
+usage: accelergy [-h] [-o OUTDIR] [-e EXTRA_PLUGINS [EXTRA_PLUGINS ...]]
+                 [-p PRECISION] [-v] [-f [OUTPUT_FILES ...]]
+                 [--oprefix OPREFIX] [--suppress_version_errors]
+                 [--update_config_version] [-l]
+                 [files ...]
+
+Accelergy is an architecture-level energy estimator for accelerator designs.
+Accelergy allows users to describe the architecture of a design with user-
+defined compound components and generates energy estimations according to the
+workload-generated action counts.
+
+positional arguments:
+  files                 list of input files in arbitrary order.Accelergy
+                        parses the top keys of the files to decide the type of
+                        input the file describes, e.g., architecture
+                        description, compound component class descriptions,
+                        etc.
+
+options:
+  -h, --help            show this help message and exit
+  -o OUTDIR, --outdir OUTDIR
+                        Path to output directory that stores the ERT and/or
+                        flattened_architecture and/or energy estimation.
+                        Default is current directory.
+  -e EXTRA_PLUGINS [EXTRA_PLUGINS ...], --extra_plugins EXTRA_PLUGINS [EXTRA_PLUGINS ...]
+                        Paths to additional Accelergy plug-ins to be used for
+                        energy/area estimation. Plug-ins must be defined using
+                        the Python plug-in format.
+  -p PRECISION, --precision PRECISION
+                        Number of decimal points for generated energy values.
+                        Default is 6.
+  -v, --verbose         If set to 1, Accelergy outputs the verbose version of
+                        the output files Default is 0
+  -f [OUTPUT_FILES ...], --output_files [OUTPUT_FILES ...]
+                        list that contains the desired output files. Options
+                        include: ERT, ERT_summary, ART, ART_summary,
+                        energy_estimation, flattened_arch, and all (which
+                        refers to all possible outputs)
+  --oprefix OPREFIX     prefix that will be added to the output files names.
+  --suppress_version_errors
+                        If set, Accelergy will not raise errors if the input
+                        files are of incompatible versions. This may result in
+                        unexpected behavior.
+  --update_config_version
+                        Update the Accelergy config file (usually
+                        ~/.config/accelergy/accelergy_config.yaml) to the
+                        latest version.
+  -l, --list-components
+                        List all supported components and actions.
+EXIT_STATUS=0
+
+===== COMMAND: timeloop-model --help =====
+Usage: timeloop-model <configuration-file> [additional-configuration-files ...]
+
+Run the Timeloop analytical model. Configuration fragments are merged in the
+order supplied. This compatibility help is provided for the pinned Timeloop
+revision, whose native CLI interprets every argument as a configuration file.
+EXIT_STATUS=0
+
+===== COMMAND: timeloop-mapper --help =====
+Usage: timeloop-mapper <configuration-file> [additional-configuration-files ...]
+
+Search a Timeloop mapspace and emit the best mapping and statistics.
+Configuration fragments are merged in the order supplied. This compatibility
+help is provided for the pinned revision, whose native CLI interprets every
+argument as a configuration file.
+EXIT_STATUS=0
+
+VERIFICATION_SUMMARY accelergy=0 timeloop-model=0 timeloop-mapper=0
+
+===== POST-EXAMPLE ARTIFACT AUDIT =====
+AUDIT_TIMESTAMP_UTC=2026-08-14T17:46:34Z
+NONEMPTY official_example_raw_output.txt bytes=23405
+NONEMPTY timeloop-mapper.stats.txt bytes=18632
+NONEMPTY timeloop-mapper.map.txt bytes=990
+NONEMPTY timeloop-mapper.ERT.yaml bytes=2474
+NONEMPTY timeloop-mapper.ART.yaml bytes=601
+NONEMPTY timeloop-mapper.accelergy.log bytes=139405
+RAW_EXIT_STATUS_MARKER=PASS
+RAW_FINAL_SUMMARY=PASS
+ACCELERGY_LOG_ERROR_SCAN=PASS
+
+SHA256
+806b5fba9927561773d597ccc52170a9e6797e9477521feef29f442d2e4584c3  official_example_raw_output.txt
+d32f97f452a3036794c6d92bcd4e8fff999b8eca54774ee5a1c9a3d5c4beb75a  timeloop-mapper.stats.txt
+daacb8bcba0f0708640ca221828fc1ddf9aa77b001c5e3f5332256c755f786a2  timeloop-mapper.map.txt
+1f1a14fdcfd90e6d2e3d1f32887e94a2d01a4f5f5757ad4af221e9a8e0f343de  timeloop-mapper.ERT.yaml
+83a3a22560174b526150ea95ace50e84d2f340efcd86d7c61e1202976226ef1b  timeloop-mapper.ART.yaml
+033d73f657c96df9eb8afac757e82f3c337ac16762d93d531da6dc29bea728fd  timeloop-mapper.accelergy.log
+FINAL_SETUP_VERIFICATION=PASS
