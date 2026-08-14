@@ -1,0 +1,5 @@
+workload,architecture,total_energy_pJ,energy_per_compute_pJ,cycles,utilization,DRAM_or_highest_level_energy_pJ,SRAM_or_local_buffer_energy_pJ,compute_energy_pJ,interconnect_or_network_energy_pJ,highest_level_reads,highest_level_writes,local_memory_reads,local_memory_writes,total_MACs,latency_us,external_DRAM_reads,external_DRAM_writes
+alexnet_conv1_activation_intensive,planar,7343230000,69.66004,732050,0.8571,6775052288,526161778,42013333.38,NA,105569787,290400,3288175,2275112,105415200,732.05,105569787,290400
+alexnet_conv1_activation_intensive,integrated_3d,2256650000,21.40725,732050,0.8571,1688474635,526161778,42013333.38,NA,105569787,290400,108857962,2565512,105415200,732.05,0,0
+alexnet_conv2_compute_intensive,planar,3103780000,6.92967,3110400,0.8571,1121624064,1803647754,178510036.4,NA,17338752,186624,55796688,26363664,447897600,3110.4,17338752,186624
+alexnet_conv2_compute_intensive,integrated_3d,2261550000,5.04925,3110400,0.8571,279387225.1,1803647754,178510036.4,NA,17338752,186624,73135440,26550288,447897600,3110.4,0,0

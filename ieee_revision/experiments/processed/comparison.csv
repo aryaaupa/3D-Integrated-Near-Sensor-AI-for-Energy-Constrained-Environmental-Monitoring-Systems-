@@ -1,0 +1,3 @@
+workload,total_energy_reduction_percent,cycle_reduction_percent,latency_reduction_percent,highest_level_memory_access_reduction_percent,external_DRAM_access_reduction_percent,energy_per_compute_reduction_percent
+alexnet_conv1_activation_intensive,69.26897292,0,0,0,100,69.26896683
+alexnet_conv2_compute_intensive,27.13562173,0,0,0,100,27.13577991

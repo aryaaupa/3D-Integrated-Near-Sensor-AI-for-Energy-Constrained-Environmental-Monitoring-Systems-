@@ -1,0 +1,132 @@
+input file: input.yaml
+  _______                __                
+ /_  __(_)___ ___  ___  / /___  ____  ____ 
+  / / / / __ `__ \/ _ \/ / __ \/ __ \/ __ \
+ / / / / / / / / /  __/ / /_/ / /_/ / /_/ /
+/_/ /_/_/ /_/ /_/\___/_/\____/\____/ .___/ 
+                                  /_/      
+
+Problem configuration complete.
+execute:/workspace/scratch/ae4887560717/timeloop-env/bin/accelergy input.yaml --oprefix timeloop-mapper. -o ./ > timeloop-mapper.accelergy.log 2>&1
+Generate Accelergy ERT (energy reference table) to replace internal energy model.
+Generate Accelergy ART (area reference table) to replace internal area model.
+Architecture configuration complete.
+Sparse optimization configuration complete.
+Using threads = 8
+Mapper configuration complete.
+Initializing Index Factorization subspace.
+  Factorization options along problem dimension C = 224
+  Factorization options along problem dimension M = 495
+  Factorization options along problem dimension R = 3
+  Factorization options along problem dimension S = 3
+  Factorization options along problem dimension N = 1
+  Factorization options along problem dimension P = 4
+  Factorization options along problem dimension Q = 10
+Mapspace Dimension [IndexFactorization] Size: 39916800
+Mapspace Dimension [LoopPermutation] Size: 518400
+Mapspace Dimension [Spatial] Size: 1
+Mapspace Dimension [DatatypeBypass] Size: 1
+Mapspace split! Per-split Mapping Dimension [IndexFactorization] Size: 4989600 Residue: 0
+Mapspace construction complete.
+Search configuration complete.
+Start Parsering Layout
+No Layout specified, so using bandwidth based modeling
+[  4] Utilization = 0.05 | pJ/Compute =   70.188 | L6[WIO] P3 Q27 C8 - L5[IO] P9 C6 S5 M8 - L4[] Q1 M4X - L3[] Q1 C2Y - L2[I] Q1 - L1[W] R5 - L0[O] M8  | Cycles = 55987200
+[  3] Utilization = 0.02 | pJ/Compute =   70.146 | L6[WIO] P3 Q27 C8 - L5[IO] P9 C6 S5 M8 - L4[] Q1 M4X - L3[] Q1 - L2[I] Q1 - L1[W] R5 C2 - L0[O] M8  | Cycles = 111974400
+[  5] Utilization = 0.24 | pJ/Compute =   71.644 | L6[WIO] C32 P3 Q3 R5 - L5[IO] P9 Q9 M8 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 11197440
+[  4] Utilization = 0.05 | pJ/Compute =   12.033 | L6[WIO] P3 C8 Q27 - L5[IO] S5 M8 C6 P9 - L4[] Q1 M4X - L3[] Q1 C2Y - L2[I] Q1 - L1[W] R5 - L0[O] M8  | Cycles = 55987200
+[  6] Utilization = 0.36 | pJ/Compute =   26.860 | L6[WIO] Q3 M4 P9 C12 - L5[IO] Q3 P3 R5 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C8 - L0[O] M16  | Cycles = 7464960
+[  1] Utilization = 0.02 | pJ/Compute =   69.887 | L6[WIO] P3 Q27 C8 - L5[IO] P9 C4 S5 M8 - L4[] Q1 M4X - L3[] Q1 - L2[I] Q1 - L1[W] R5 C3 - L0[O] M8  | Cycles = 111974400
+[  7] Utilization = 0.24 | pJ/Compute =   13.025 | L6[WIO] Q3 R5 P3 C32 - L5[IO] M8 P9 C3 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M4  | Cycles = 11197440
+[  3] Utilization = 0.02 | pJ/Compute =   11.991 | L6[WIO] P3 C8 Q27 - L5[IO] S5 M8 C6 P9 - L4[] Q1 M4X - L3[] Q1 - L2[I] Q1 - L1[W] R5 C2 - L0[O] M8  | Cycles = 111974400
+[  6] Utilization = 0.36 | pJ/Compute =   12.137 | L6[WIO] Q3 M4 C12 P9 - L5[IO] Q3 R5 P3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C8 - L0[O] M16  | Cycles = 7464960
+[  1] Utilization = 0.02 | pJ/Compute =   11.733 | L6[WIO] P3 C8 Q27 - L5[IO] S5 M8 C4 P9 - L4[] Q1 M4X - L3[] Q1 - L2[I] Q1 - L1[W] R5 C3 - L0[O] M8  | Cycles = 111974400
+[  2] Utilization = 0.24 | pJ/Compute =   11.605 | L6[WIO] Q3 R5 P3 C3 - L5[IO] M8 P9 C8 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C4 - L0[O] M4  | Cycles = 11197440
+[  5] Utilization = 0.24 | pJ/Compute =   13.740 | L6[WIO] C32 Q3 R5 P3 - L5[IO] M8 P9 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 11197440
+[  0] Utilization = 0.24 | pJ/Compute =   12.078 | L6[WIO] Q3 R5 P3 C3 - L5[IO] M8 P9 C16 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C2 - L0[O] M4  | Cycles = 11197440
+[  6] Utilization = 0.36 | pJ/Compute =    6.960 | L6[WIO] Q3 C12 P9 M4 - L5[IO] R5 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C8 - L0[O] M16  | Cycles = 7464960
+[  7] Utilization = 0.24 | pJ/Compute =    6.525 | L6[WIO] R5 Q3 P3 C32 - L5[IO] C3 M8 P9 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M4  | Cycles = 11197440
+[  5] Utilization = 0.24 | pJ/Compute =   11.867 | L6[WIO] R5 Q3 P3 C32 - L5[IO] Q9 M8 P9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 11197440
+[  2] Utilization = 0.24 | pJ/Compute =    5.104 | L6[WIO] R5 Q3 P3 C3 - L5[IO] C8 M8 P9 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C4 - L0[O] M4  | Cycles = 11197440
+[  0] Utilization = 0.24 | pJ/Compute =    5.578 | L6[WIO] R5 Q3 P3 C3 - L5[IO] C16 M8 P9 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C2 - L0[O] M4  | Cycles = 11197440
+[  5] Utilization = 0.24 | pJ/Compute =   11.751 | L6[WIO] Q3 R5 P3 C32 - L5[IO] P9 M8 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 11197440
+[  4] Utilization = 0.71 | pJ/Compute =   12.531 | L6[WIO] P9 Q3 M4 C8 - L5[IO] C6 Q3 R5 P3 - L4[] Q1 M4X Q3X - L3[] Q1 C2Y S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 3732480
+[  2] Utilization = 0.24 | pJ/Compute =    4.941 | L6[WIO] C3 P3 Q3 R5 - L5[IO] C8 M8 P9 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C4 - L0[O] M4  | Cycles = 11197440
+[  3] Utilization = 0.36 | pJ/Compute =   12.317 | L6[WIO] P9 Q3 M4 C8 - L5[IO] C6 Q3 R5 P3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C2 - L0[O] M16  | Cycles = 7464960
+[  4] Utilization = 0.71 | pJ/Compute =    7.676 | L6[WIO] P9 C8 Q3 M4 - L5[IO] R5 C6 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 C2Y S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 3732480
+[  0] Utilization = 0.24 | pJ/Compute =    5.415 | L6[WIO] C3 P3 Q3 R5 - L5[IO] C16 M8 P9 Q9 - L4[] Q1 M4X - L3[] Q1 M2Y S5Y - L2[I] Q1 - L1[W] C2 - L0[O] M4  | Cycles = 11197440
+[  4] Utilization = 0.71 | pJ/Compute =    7.665 | L6[WIO] C8 Q3 P9 M4 - L5[IO] C6 R5 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 C2Y S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 3732480
+[  3] Utilization = 0.36 | pJ/Compute =    7.462 | L6[WIO] P9 C8 Q3 M4 - L5[IO] R5 C6 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C2 - L0[O] M16  | Cycles = 7464960
+[  3] Utilization = 0.36 | pJ/Compute =    7.451 | L6[WIO] C8 Q3 P9 M4 - L5[IO] C6 R5 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C2 - L0[O] M16  | Cycles = 7464960
+[  1] Utilization = 0.36 | pJ/Compute =   12.002 | L6[WIO] P9 Q3 M4 C8 - L5[IO] C4 Q3 R5 P3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M16  | Cycles = 7464960
+[  5] Utilization = 0.36 | pJ/Compute =   13.265 | L6[WIO] P9 Q3 M4 C8 - L5[IO] C12 Q3 R5 P3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 7464960
+[  1] Utilization = 0.36 | pJ/Compute =    7.146 | L6[WIO] P9 C8 Q3 M4 - L5[IO] R5 C4 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M16  | Cycles = 7464960
+[  7] Utilization = 0.71 | pJ/Compute =    7.030 | L6[WIO] Q3 P9 C12 M4 - L5[IO] R5 Q3 P3 - L4[] Q1 M4X Q3X - L3[] Q1 C2Y S5Y - L2[I] Q1 - L1[W] C4 - L0[O] M16  | Cycles = 3732480
+[  5] Utilization = 0.36 | pJ/Compute =    8.409 | L6[WIO] P9 C8 Q3 M4 - L5[IO] R5 C12 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 7464960
+[  5] Utilization = 0.36 | pJ/Compute =    8.399 | L6[WIO] C8 Q3 P9 M4 - L5[IO] C12 R5 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 7464960
+[  1] Utilization = 0.36 | pJ/Compute =    7.136 | L6[WIO] C8 Q3 P9 M4 - L5[IO] C4 R5 P3 Q3 - L4[] Q1 M4X Q3X - L3[] Q1 S5Y - L2[I] Q1 - L1[W] C3 - L0[O] M16  | Cycles = 7464960
+[  7] Utilization = 0.71 | pJ/Compute =    6.534 | L6[WIO] Q3 P9 M4 C12 - L5[IO] R5 Q3 P3 - L4[] Q1 M4X Q3X - L3[] Q1 C2Y S5Y - L2[I] Q1 - L1[W] C4 - L0[O] M16  | Cycles = 3732480
+[  2] Utilization = 0.29 | pJ/Compute =   29.775 | L6[WIO] Q3 S5 M8 C6 P3 - L5[IO] Q3 M2 C8 P9 R5 - L4[] Q1 M2X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 9331200
+[  2] Utilization = 0.29 | pJ/Compute =   28.286 | L6[WIO] S5 M8 P3 Q3 C6 - L5[IO] R5 M2 P9 Q3 C8 - L4[] Q1 M2X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 9331200
+[  5] Utilization = 0.43 | pJ/Compute =   31.978 | L6[WIO] M8 C16 Q3 S5 P3 - L5[IO] Q3 M2 P9 R5 - L4[] Q1 M2X Q3X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] C2 - L0[O] M2  | Cycles = 6220800
+[  2] Utilization = 0.29 | pJ/Compute =   27.877 | L6[WIO] M8 P3 S5 Q3 C6 - L5[IO] P9 M2 Q3 R5 C8 - L4[] Q1 M2X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 9331200
+[  2] Utilization = 0.29 | pJ/Compute =   27.658 | L6[WIO] P3 Q3 M8 S5 C6 - L5[IO] P9 Q3 M2 R5 C8 - L4[] Q1 M2X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 9331200
+[  5] Utilization = 0.43 | pJ/Compute =   31.578 | L6[WIO] C16 P3 Q3 S5 M8 - L5[IO] P9 Q3 M2 R5 - L4[] Q1 M2X Q3X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] C2 - L0[O] M2  | Cycles = 6220800
+[  0] Utilization = 0.29 | pJ/Compute =   31.143 | L6[WIO] C2 P27 Q9 M32 S5 - L5[IO] C2 R5 - L4[] Q1 M2X Q3X - L3[] Q1 C8Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 9331200
+[  0] Utilization = 0.29 | pJ/Compute =   27.955 | L6[WIO] Q9 P27 S5 C2 M32 - L5[IO] R5 C2 - L4[] Q1 M2X Q3X - L3[] Q1 C8Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 9331200
+[  0] Utilization = 0.29 | pJ/Compute =   27.753 | L6[WIO] C2 S5 Q9 P27 M32 - L5[IO] C2 R5 - L4[] Q1 M2X Q3X - L3[] Q1 C8Y - L2[I] Q1 - L1[W] C3 - L0[O] M4  | Cycles = 9331200
+[  6] Utilization = 0.36 | pJ/Compute =   71.985 | L6[WIO] Q27 C6 M4 R5 - L5[IO] C4 S5 P27 M2 - L4[] Q1 M8X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C2 - L0[O] Q1  | Cycles = 7424136
+[  6] Utilization = 0.38 | pJ/Compute =   71.813 | L6[WIO] R5 M4 C6 Q27 - L5[IO] P27 C4 M2 S5 - L4[] Q1 M8X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C2 - L0[O] Q1  | Cycles = 6998400
+[  6] Utilization = 0.38 | pJ/Compute =   70.193 | L6[WIO] C6 M4 Q27 R5 - L5[IO] P27 M2 S5 C4 - L4[] Q1 M8X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C2 - L0[O] Q1  | Cycles = 6998400
+[  1] Utilization = 0.43 | pJ/Compute =   31.143 | L6[WIO] C2 P27 Q9 M32 S5 - L5[IO] C2 R5 - L4[] Q1 M2X Q3X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] C2 - L0[O] M4  | Cycles = 6220800
+[  1] Utilization = 0.43 | pJ/Compute =   27.961 | L6[WIO] Q9 P27 S5 C2 M32 - L5[IO] R5 C2 - L4[] Q1 M2X Q3X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] C2 - L0[O] M4  | Cycles = 6220800
+[  1] Utilization = 0.43 | pJ/Compute =   27.759 | L6[WIO] C2 S5 Q9 P27 M32 - L5[IO] C2 R5 - L4[] Q1 M2X Q3X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] C2 - L0[O] M4  | Cycles = 6220800
+[  5] Utilization = 0.54 | pJ/Compute =   72.047 | L6[WIO] C4 R5 Q9 - L5[IO] C4 P27 Q3 S5 M8 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 4912327
+[  5] Utilization = 0.57 | pJ/Compute =   70.241 | L6[WIO] R5 Q9 C4 - L5[IO] Q3 S5 M8 P27 C4 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 4665600
+[  5] Utilization = 0.57 | pJ/Compute =   69.692 | L6[WIO] Q9 R5 C4 - L5[IO] Q3 M8 P27 S5 C4 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] Q1 - L0[O] M2  | Cycles = 4665600
+[  0] Utilization = 0.38 | pJ/Compute =    5.956 | L6[WIO] R5 Q9 C4 - L5[IO] S5 M8 C3 Q3 P27 - L4[] Q1 M8X - L3[] Q1 M2Y C4Y - L2[I] Q1 - L1[W] C2 - L0[O] M2  | Cycles = 6998400
+[  2] Utilization = 0.43 | pJ/Compute =   14.412 | L6[WIO] M16 P9 C2 Q3 R5 - L5[IO] S5 C6 P3 M8 - L4[] Q1 Q9X - L3[] Q1 M2Y C4Y - L2[I] Q1 - L1[W] C2 - L0[O] Q1  | Cycles = 6220800
+[  4] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  6] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  5] Utilization = 0.64 | pJ/Compute =   14.266 | L6[WIO] C4 R5 P27 S5 - L5[IO] M16 Q3 C2 - L4[] Q1 Q9X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 4147200
+[  5] Utilization = 0.64 | pJ/Compute =   13.921 | L6[WIO] R5 P27 S5 C4 - L5[IO] C2 Q3 M16 - L4[] Q1 Q9X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 4147200
+[  5] Utilization = 0.64 | pJ/Compute =   13.500 | L6[WIO] P27 C4 R5 S5 - L5[IO] C2 Q3 M16 - L4[] Q1 Q9X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 4147200
+[  5] Utilization = 0.64 | pJ/Compute =   13.405 | L6[WIO] S5 C4 R5 P27 - L5[IO] C2 M16 Q3 - L4[] Q1 Q9X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 4147200
+[  5] Utilization = 0.64 | pJ/Compute =    8.987 | L6[WIO] C4 S5 P27 R5 - L5[IO] C2 M16 Q3 - L4[] Q1 Q9X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 4147200
+[  5] Utilization = 0.64 | pJ/Compute =    7.796 | L6[WIO] P27 C4 R5 S5 - L5[IO] M16 C2 Q3 - L4[] Q1 Q9X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] Q1 - L0[O] M16  | Cycles = 4147200
+[  3] Utilization = 0.41 | pJ/Compute =   14.285 | L6[WIO] C3 M4 Q3 P27 - L5[IO] S5 C32 M2 R5 - L4[] Q1 Q9X - L3[] Q1 M8Y - L2[I] Q1 - L1[W] Q1 - L0[O] M4  | Cycles = 6461856
+[  3] Utilization = 0.43 | pJ/Compute =   13.217 | L6[WIO] M4 P27 C3 Q3 - L5[IO] C32 M2 R5 S5 - L4[] Q1 Q9X - L3[] Q1 M8Y - L2[I] Q1 - L1[W] Q1 - L0[O] M4  | Cycles = 6220800
+[  3] Utilization = 0.43 | pJ/Compute =   12.870 | L6[WIO] M4 Q3 P27 C3 - L5[IO] M2 C32 S5 R5 - L4[] Q1 Q9X - L3[] Q1 M8Y - L2[I] Q1 - L1[W] Q1 - L0[O] M4  | Cycles = 6220800
+[  7] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  3] Utilization = 0.43 | pJ/Compute =   12.745 | L6[WIO] C3 M4 Q3 P27 - L5[IO] M2 S5 R5 C32 - L4[] Q1 Q9X - L3[] Q1 M8Y - L2[I] Q1 - L1[W] Q1 - L0[O] M4  | Cycles = 6220800
+[  1] Utilization = 0.57 | pJ/Compute =   27.162 | L6[WIO] M4 P9 C4 - L5[IO] Q9 P3 M4 S5 R5 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C12 - L0[O] Q1  | Cycles = 4665600
+[  1] Utilization = 0.57 | pJ/Compute =    7.019 | L6[WIO] C4 M4 P9 - L5[IO] P3 S5 R5 M4 Q9 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C12 - L0[O] Q1  | Cycles = 4665600
+[  1] Utilization = 0.57 | pJ/Compute =    6.912 | L6[WIO] M4 P9 C4 - L5[IO] P3 S5 M4 R5 Q9 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C12 - L0[O] Q1  | Cycles = 4665600
+[  1] Utilization = 0.57 | pJ/Compute =    5.304 | L6[WIO] C4 M4 P9 - L5[IO] S5 M4 R5 Q9 P3 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C12 - L0[O] Q1  | Cycles = 4665600
+[  1] Utilization = 0.57 | pJ/Compute =    5.263 | L6[WIO] C4 P9 M4 - L5[IO] R5 M4 S5 Q9 P3 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C2Y - L2[I] Q1 - L1[W] C12 - L0[O] Q1  | Cycles = 4665600
+[  2] Utilization = 0.86 | pJ/Compute =   27.251 | L6[WIO] C4 P9 M4 - L5[IO] R5 Q9 S5 P3 M4 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] C8 - L0[O] Q1  | Cycles = 3110400
+[  2] Utilization = 0.86 | pJ/Compute =   12.152 | L6[WIO] M4 C4 P9 - L5[IO] S5 Q9 R5 M4 P3 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] C8 - L0[O] Q1  | Cycles = 3110400
+[  3] Utilization = 0.57 | pJ/Compute =   70.770 | L6[WIO] R5 C4 Q3 - L5[IO] S5 Q9 P27 C8 - L4[] Q1 M8X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] Q1 - L0[O] M8  | Cycles = 4665600
+[  3] Utilization = 0.57 | pJ/Compute =   70.483 | L6[WIO] R5 C4 Q3 - L5[IO] Q9 P27 S5 C8 - L4[] Q1 M8X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] Q1 - L0[O] M8  | Cycles = 4665600
+[  3] Utilization = 0.57 | pJ/Compute =   69.688 | L6[WIO] Q3 C4 R5 - L5[IO] Q9 S5 P27 C8 - L4[] Q1 M8X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] Q1 - L0[O] M8  | Cycles = 4665600
+[  2] Utilization = 0.86 | pJ/Compute =    6.930 | L6[WIO] P9 M4 C4 - L5[IO] P3 S5 M4 R5 Q9 - L4[] Q1 M4X Q3X - L3[] Q1 M4Y C3Y - L2[I] Q1 - L1[W] C8 - L0[O] Q1  | Cycles = 3110400
+[  0] Utilization = 0.43 | pJ/Compute =   13.758 | L6[WIO] Q3 C4 P3 M2 R5 - L5[IO] P9 S5 C3 M32 - L4[] Q1 Q9X - L3[] Q1 M2Y C4Y - L2[I] Q1 - L1[W] C2 - L0[O] M2  | Cycles = 6220800
+[  0] Utilization = 0.57 | pJ/Compute =    9.056 | L6[WIO] P9 M16 S5 R5 - L5[IO] P3 M2 C4 Q27 - L4[] Q1 M8X - L3[] Q1 C12Y - L2[I] Q1 - L1[W] C2 - L0[O] Q1  | Cycles = 4665600
+[  3] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  1] Utilization = 0.57 | pJ/Compute =    4.659 | L6[WIO] S5 M8 C12 - L5[IO] M4 Q9 P27 - L4[] Q1 M4X Q3X - L3[] Q1 C8Y - L2[I] Q1 - L1[W] R5 - L0[O] M2  | Cycles = 4665600
+[  1] Utilization = 0.57 | pJ/Compute =    4.068 | L6[WIO] M8 C12 S5 - L5[IO] M4 Q9 P27 - L4[] Q1 M4X Q3X - L3[] Q1 C8Y - L2[I] Q1 - L1[W] R5 - L0[O] M2  | Cycles = 4665600
+[  5] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  2] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  0] Utilization = 0.57 | pJ/Compute =    8.680 | L6[WIO] C8 P27 S5 M2 - L5[IO] M8 Q27 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] R5 C2 - L0[O] Q1  | Cycles = 4665600
+[  0] Utilization = 0.57 | pJ/Compute =    7.232 | L6[WIO] S5 M2 P27 C8 - L5[IO] M8 Q27 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] R5 C2 - L0[O] Q1  | Cycles = 4665600
+[  0] Utilization = 0.57 | pJ/Compute =    7.013 | L6[WIO] M2 P27 S5 C8 - L5[IO] M8 Q27 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] R5 C2 - L0[O] Q1  | Cycles = 4665600
+[  0] Utilization = 0.57 | pJ/Compute =    6.990 | L6[WIO] M2 C8 P27 S5 - L5[IO] M8 Q27 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] R5 C2 - L0[O] Q1  | Cycles = 4665600
+[  0] Utilization = 0.57 | pJ/Compute =    5.051 | L6[WIO] M4 Q3 C8 S5 - L5[IO] R5 M4 P27 Q9 - L4[] Q1 M8X - L3[] Q1 M2Y C6Y - L2[I] Q1 - L1[W] C2 - L0[O] Q1  | Cycles = 4665600
+[  1] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+[  0] STATEMENT: 500 suboptimal mappings found since the last upgrade, terminating search.
+
+
+Summary stats for best mapping found by mapper:
+  Utilization = 0.86 | pJ/Compute =    6.930 | Cycles = 3110400
+
+EXIT_STATUS=0

@@ -1,0 +1,7 @@
+input file: input.yaml
+execute:/workspace/scratch/ae4887560717/timeloop-env/bin/accelergy input.yaml --oprefix timeloop-model. -o ./ > timeloop-model.accelergy.log 2>&1
+Start Parsering Layout
+No Layout specified, so using bandwidth based modeling
+Utilization = 0.86 | pJ/Compute =   37.394 | Cycles = 732050
+
+EXIT_STATUS=0

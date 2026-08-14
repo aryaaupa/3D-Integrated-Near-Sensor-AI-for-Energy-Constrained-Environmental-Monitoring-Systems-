@@ -1,0 +1,76 @@
+VERIFICATION_UTC=2026-08-14T17:54:39Z
+
+$ accelergy -h
+2026-08-15 01:54:39 INFO            _                _                      
+2026-08-15 01:54:39 INFO           / \   ___ ___ ___| | ___ _ __ __ _ _   _ 
+2026-08-15 01:54:39 INFO          / _ \ / __/ __/ _ \ |/ _ \ '__/ _` | | | |
+2026-08-15 01:54:39 INFO         / ___ \ (_| (_|  __/ |  __/ | | (_| | |_| |
+2026-08-15 01:54:39 INFO        /_/   \_\___\___\___|_|\___|_|  \__, |\__, |
+2026-08-15 01:54:39 INFO                                        |___/ |___/ 
+usage: accelergy [-h] [-o OUTDIR] [-e EXTRA_PLUGINS [EXTRA_PLUGINS ...]]
+                 [-p PRECISION] [-v] [-f [OUTPUT_FILES ...]]
+                 [--oprefix OPREFIX] [--suppress_version_errors]
+                 [--update_config_version] [-l]
+                 [files ...]
+
+Accelergy is an architecture-level energy estimator for accelerator designs.
+Accelergy allows users to describe the architecture of a design with user-
+defined compound components and generates energy estimations according to the
+workload-generated action counts.
+
+positional arguments:
+  files                 list of input files in arbitrary order.Accelergy
+                        parses the top keys of the files to decide the type of
+                        input the file describes, e.g., architecture
+                        description, compound component class descriptions,
+                        etc.
+
+options:
+  -h, --help            show this help message and exit
+  -o OUTDIR, --outdir OUTDIR
+                        Path to output directory that stores the ERT and/or
+                        flattened_architecture and/or energy estimation.
+                        Default is current directory.
+  -e EXTRA_PLUGINS [EXTRA_PLUGINS ...], --extra_plugins EXTRA_PLUGINS [EXTRA_PLUGINS ...]
+                        Paths to additional Accelergy plug-ins to be used for
+                        energy/area estimation. Plug-ins must be defined using
+                        the Python plug-in format.
+  -p PRECISION, --precision PRECISION
+                        Number of decimal points for generated energy values.
+                        Default is 6.
+  -v, --verbose         If set to 1, Accelergy outputs the verbose version of
+                        the output files Default is 0
+  -f [OUTPUT_FILES ...], --output_files [OUTPUT_FILES ...]
+                        list that contains the desired output files. Options
+                        include: ERT, ERT_summary, ART, ART_summary,
+                        energy_estimation, flattened_arch, and all (which
+                        refers to all possible outputs)
+  --oprefix OPREFIX     prefix that will be added to the output files names.
+  --suppress_version_errors
+                        If set, Accelergy will not raise errors if the input
+                        files are of incompatible versions. This may result in
+                        unexpected behavior.
+  --update_config_version
+                        Update the Accelergy config file (usually
+                        ~/.config/accelergy/accelergy_config.yaml) to the
+                        latest version.
+  -l, --list-components
+                        List all supported components and actions.
+EXIT=0
+
+$ timeloop-model --help
+Usage: timeloop-model <configuration-file> [additional-configuration-files ...]
+
+Run the Timeloop analytical model. Configuration fragments are merged in the
+order supplied. This compatibility help is provided for the pinned Timeloop
+revision, whose native CLI interprets every argument as a configuration file.
+EXIT=0
+
+$ timeloop-mapper --help
+Usage: timeloop-mapper <configuration-file> [additional-configuration-files ...]
+
+Search a Timeloop mapspace and emit the best mapping and statistics.
+Configuration fragments are merged in the order supplied. This compatibility
+help is provided for the pinned revision, whose native CLI interprets every
+argument as a configuration file.
+EXIT=0
