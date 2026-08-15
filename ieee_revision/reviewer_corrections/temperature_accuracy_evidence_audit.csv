@@ -1,0 +1,11 @@
+required_evidence,status,source_checked,decision
+Temperature-labeled sensor observations,MISSING,"repository tree; supplied manuscript; reviewer instructions",No curve
+Specified sensor modality and transducer model,MISSING,"supplied manuscript; architecture configuration",No curve
+Ground-truth labels,MISSING,"repository tree; supplied files",No curve
+Frozen trained model or checkpoint,MISSING,"repository tree",No curve
+Per-temperature predictions,MISSING,"repository tree; supplied files",No curve
+Per-temperature sample counts,MISSING,"repository tree; supplied files",No curve
+Accuracy metric definition,MISSING,"supplied manuscript",No curve
+Uncertainty or repeat measurements,MISSING,"repository tree; supplied files",No curve
+PTM nominal device temperature,AVAILABLE,"spice_validation/models/45nm_HP.pm: tnom=27",Circuit parameter only; not sensing accuracy
+ngspice temperature capability,AVAILABLE,"ngspice 42 and model card",Could support circuit energy/delay sweep only; not sensing accuracy

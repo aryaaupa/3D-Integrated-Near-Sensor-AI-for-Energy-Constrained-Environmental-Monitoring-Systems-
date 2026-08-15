@@ -1,0 +1,8 @@
+PASS alexnet_conv1_activation_intensive: identical problem, mapping, MAC, compute, cycles, utilization
+PASS alexnet_conv1_activation_intensive: comparison formulas recomputed consistently
+PASS alexnet_conv2_compute_intensive: identical problem, mapping, MAC, compute, cycles, utilization
+PASS alexnet_conv2_compute_intensive: comparison formulas recomputed consistently
+PASS traceability: every listed raw source file exists
+PASS sensitivity: four capacity runs have complete, error-free raw artifacts
+PASS all four main runs and all four sensitivity runs exited successfully
+FINAL_VALIDATION=PASS

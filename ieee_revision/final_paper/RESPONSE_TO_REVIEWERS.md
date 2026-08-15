@@ -1,0 +1,139 @@
+# Response to Reviewers
+
+Manuscript: “3D-Integrated Near-Sensor AI for Energy-Constrained Environmental Monitoring Systems”
+
+We thank the Associate Editor and the reviewers for their detailed comments. The revision replaces the former analytical-only evaluation with a reproducible two-level study: (1) a controlled Timeloop/Accelergy evaluation with CACTI-backed SRAM characterization and (2) an independent ngspice transistor-level communication-link evaluation. We report absolute, per-workload results and preserve raw inputs, outputs, scripts, checksums, and validation records. Claims not supported by these experiments—particularly architectural speedup and sensing accuracy versus temperature—have been removed or bounded explicitly.
+
+## Reviewer 1
+
+### Comment 1
+
+**Reviewer comment:** The evaluation relies on an author-constructed analytical model and does not use established architecture, circuit, RTL, or silicon-evaluation tools.
+
+**Response:** Thank you. We replaced the analytical-only evidence with two established simulation paths. Timeloop now supplies mappings, cycles, utilization, and memory activity; Accelergy combines those actions with component energy-reference-table entries; and SRAM entries are generated through the Accelergy CACTI workflow. A separate ngspice 42 transient study evaluates an identical CMOS driver/receiver path under two link-load proxies using the exact committed `45nm_HP.pm` model. The two modeling levels remain separate, and all raw output is versioned.
+
+**Location:** Sections IV-A–IV-L; Figs. 2 and 4–8; Tables II–IV; `TRACEABILITY.md`.
+
+### Comment 2
+
+**Reviewer comment:** The paper lacks explicit workloads, absolute values, and per-workload results.
+
+**Response:** We now evaluate AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration with complete tensor dimensions, strides, element counts, MAC counts, and an explicitly defined architecture-oriented intensity indicator. The manuscript states that dense CONV2 uses the spatial dimensions of AlexNet CONV2 but connects each 5 × 5 filter to all 96 input channels rather than using canonical grouped connectivity. Absolute modeled energy, energy per compute, cycles, utilization, cycle-derived execution time under the stated 1-GHz assumption, highest-level events, and external-DRAM events are reported for both planar and localized configurations. The principal result is workload dependent: total energy decreases by 69.27% for CONV1 and 27.14% for dense CONV2, while cycles and utilization remain unchanged.
+
+**Location:** Sections I, IV-B, IV-H, V-A–V-C; Figs. 4–5; Tables I and III.
+
+### Comment 3
+
+**Reviewer comment:** The manuscript lacks comparison with published 3D and near-sensor systems.
+
+**Response:** We expanded the related-work discussion to include foundational 3D-integration work, CamJ, and J3DAI. The revision positions J3DAI as a specialized fabricated three-wafer CMOS-image-sensor/DNN platform and this work as a controlled memory-localization study plus a representative link simulation. We do not make an unfair cross-platform percentage comparison.
+
+**Location:** Sections II-B, II-C, II-E, and VII; Table V.
+
+### Comment 4
+
+**Reviewer comment:** The figures are schematic and do not provide quantitative evidence.
+
+**Response:** We retained concise architecture and workflow schematics for clarity and added five quantitative, script-generated plots: total energy, energy per compute, localized-SRAM capacity sensitivity, link energy versus capacitance, and link delay versus capacitance. Each PDF and PNG is generated from committed CSV data by one plotting script.
+
+**Location:** Figs. 4–8; `figure_data/`; `scripts/generate_all_figures.py`.
+
+### Comment 5
+
+**Reviewer comment:** The state-of-the-art discussion and reference list are insufficient and contain duplication.
+
+**Response:** We rebuilt the related-work section around primary sources and produced a single, deduplicated IEEE bibliography. Every citation has been audited against a publisher or official-project source, including version-matched ngspice documentation and separate attribution for predictive-model methodology versus the exact PTM card.
+
+**Location:** Section II; References [1]–[18]; `reference_audit.md`.
+
+### Comment 6
+
+**Reviewer comment:** The proposed memory technology is unspecified.
+
+**Response:** The evaluated localized memory is now stated consistently as SRAM. The nominal architectural proxy is a 2-MiB, 64-bit-wide CACTI-backed SRAM above the unchanged 128-KiB global buffer. The manuscript no longer implies that an unspecified NVM produced the reported result.
+
+**Location:** Sections III-A–III-C and IV-C–IV-F; Table II; Fig. 3.
+
+## Reviewer 2
+
+### Comment 1
+
+**Reviewer comment:** Please add and discuss Shen *et al.* on unified core-memory thermal management in 3D-stacked systems.
+
+**Response:** Thank you. We added the requested ACM TECS article and use it to motivate coordinated core DVFS and memory low-power control. We also make clear that this source constrains the interpretation of our energy study; it is not treated as thermal evidence generated by our experiments.
+
+**Location:** Sections II-D and VI; Reference [9].
+
+### Comment 2
+
+**Reviewer comment:** Concrete evaluated workloads and model details are needed.
+
+**Response:** The revision specifies AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration, including input/output tensors, kernel, stride, connectivity, MACs, tensor volumes, bit widths, array size, RF capacities, global SRAM, highest-level memories, technology, clock, and fixed-mapping procedure. It also records the simulator and model identifiers for the circuit study.
+
+**Location:** Sections IV-B–IV-G and IV-J; Tables I, II, and IV.
+
+### Comment 3
+
+**Reviewer comment:** Please characterize workload arithmetic intensity or memory sensitivity.
+
+**Response:** We define an architecture-oriented indicator, MACs divided by the combined weight/input/output tensor-element count. It is 219.69 for AlexNet CONV1 and 501.41 for dense CONV2. We explicitly state that this is not a roofline operational intensity because it does not represent achieved bytes transferred. The indicator and component energies explain why the localization benefit differs between the two workload configurations.
+
+**Location:** Sections I, IV-B, and V-B; Table I.
+
+### Comment 4
+
+**Reviewer comment:** Please provide sensing accuracy as a function of thermal behavior.
+
+**Response:** We agree that sensor accuracy across temperature is important, but the current evidence cannot support such a curve. The repository contains no temperature-labeled sensor dataset, calibrated temperature-dependent transfer function, prediction outputs, ground truth, or defined accuracy metric. The ngspice device card's nominal 27 °C temperature is not a sensor-accuracy experiment. We therefore do not fabricate a curve. Instead, the revision states the required validation protocol and treats temperature-dependent sensing accuracy as future sensor-level work.
+
+**Location:** Section VI, fourth and fifth paragraphs; Section VII limitations; `TRACEABILITY.md` temperature-evidence boundary.
+
+### Comment 5
+
+**Reviewer comment:** Please discuss J3DAI and clarify how the proposed work differs.
+
+**Response:** J3DAI is now discussed as a specialized fabricated three-wafer CMOS-image-sensor and DNN-accelerator platform. Our contribution is different: a generalized, controlled study of replacing external LPDDR4 with localized SRAM on an unchanged compute substrate, plus an independent representative-link simulation. We explicitly avoid claiming superiority to the fabricated platform.
+
+**Location:** Sections II-C, II-E, and VII; Table V; Reference [8].
+
+## Reviewer 3
+
+### Comment 1
+
+**Reviewer comment:** The modeling framework and reproducibility details are unclear.
+
+**Response:** We now identify each tool's role, the source commits, workload/mapping controls, architecture parameters, energy equation, action-count interpretation, capacity sweep, circuit netlist and PTM provenance, switching-energy integration window, delay thresholds, raw artifact classes, checksums, and automated validators.
+
+**Location:** Section IV in full; Fig. 2; `TRACEABILITY.md`.
+
+### Comment 2
+
+**Reviewer comment:** Absolute values and a per-workload quantitative breakdown are missing.
+
+**Response:** The revision reports absolute layer energy, energy per compute, cycles, utilization, highest-level reads/writes, and external-DRAM accesses for every architecture/workload pair. Component-level highest-memory, lower-buffer, and compute energies are also discussed where directly extractable.
+
+**Location:** Sections V-A–V-C; Figs. 4–5; Table III.
+
+### Comment 3
+
+**Reviewer comment:** Quantitative comparisons and sensitivity evidence are insufficient.
+
+**Response:** Five quantitative figures now show absolute architecture energy, energy per compute, a four-point localized-SRAM capacity sweep, and five-point link-energy and link-delay behavior. The localized-memory benefit decreases from 69.27% at 2 MiB to 28.95% at 16 MiB for CONV1, demonstrating that larger local storage is not monotonically more energy efficient in the fixed-access experiment.
+
+**Location:** Sections V-D–V-F; Figs. 4–8; Tables III–IV.
+
+### Comment 4
+
+**Reviewer comment:** The manuscript is repetitive and mixes architecture, circuit, and thermal conclusions.
+
+**Response:** We reorganized the paper into one architecture description, one reproducible methodology, one quantitative results section, one bounded physical/thermal section, and one cross-level discussion. Architectural energy and cycles, link energy and delay, and unsimulated thermal behavior now have distinct modeling boundaries. Unsupported legacy claims of inference speedup, higher utilization, generic data-movement reduction, and demonstrated thermal improvement were removed.
+
+**Location:** Sections III–VII; Fig. 2; `CLAIM_AUDIT.md`.
+
+### Comment 5
+
+**Reviewer comment:** Thermal claims require correction or quantitative support.
+
+**Response:** No quantitative thermal result is claimed. Section VI is titled “Physical-Design and Thermal Considerations,” describes relevant design mechanisms, cites the requested thermal-management literature, and states exactly which package, sensor, and data inputs would be needed for validation. The conclusion lists thermal simulation and sensor-temperature characterization as future work.
+
+**Location:** Sections VI–VIII.

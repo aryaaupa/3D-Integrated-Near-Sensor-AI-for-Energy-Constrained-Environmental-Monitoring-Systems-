@@ -1,0 +1,6 @@
+workload,label,energy_reduction_percent,cycle_reduction_percent,highest_level_access_reduction_percent,external_dram_access_reduction_percent,planar_highest_level_energy_share_percent
+alexnet_conv1_activation_intensive,AlexNet CONV1,69.26897292,0,0,100,92.26256413
+alexnet_conv2_compute_intensive,AlexNet-derived dense CONV2,27.13562173,0,0,100,36.13735716
+alexnet_conv3,AlexNet CONV3,8.355732627,0,0,100,11.06223465
+alexnet_conv4_dense,AlexNet-derived dense CONV4,35.36269266,0,0,100,47.09754845
+alexnet_conv5_dense,AlexNet-derived dense CONV5,36.70755474,0,0,100,48.88883590

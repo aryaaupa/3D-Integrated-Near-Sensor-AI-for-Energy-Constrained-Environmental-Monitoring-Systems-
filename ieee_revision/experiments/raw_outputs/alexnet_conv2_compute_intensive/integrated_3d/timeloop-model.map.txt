@@ -1,0 +1,32 @@
+stacked_sram [ Weights:614400 (614400) Inputs:92256 (92256) Outputs:186624 (186624) ] 
+-------------------------------------------------------------------------------------
+| for P in [0:9)
+|   for M in [0:4)
+|     for C in [0:4)
+
+shared_glb [ Inputs:5208 (5208) Outputs:5184 (5184) ] 
+-----------------------------------------------------
+|       for P in [0:3)
+|         for S in [0:5)
+|           for M in [0:4)
+|             for R in [0:5)
+|               for Q in [0:9)
+
+inter_PE_column_spatial [ ] 
+---------------------------
+|                 for M in [0:4) (Spatial-X)
+|                   for Q in [0:3) (Spatial-X)
+
+inter_PE_spatial [ ] 
+--------------------
+|                     for M in [0:4) (Spatial-Y)
+|                       for C in [0:3) (Spatial-Y)
+
+ifmap_spad [ Inputs:8 (8) ] 
+weights_spad [ Weights:8 (8) ] 
+------------------------------
+|                         for C in [0:8)
+
+psum_spad [ Outputs:1 (1) ] 
+---------------------------
+|                           << Compute >>

@@ -1,0 +1,104 @@
+name: AlexNet CONV3-5 Timeloop evidence
+
+on:
+  push:
+    branches:
+      - agent/full-ieee-r1-manuscript
+    paths:
+      - .github/workflows/alexnet-conv3-5.yml
+      - ieee_revision/experiments/scripts/extend_alexnet_workloads.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extend:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    container:
+      image: timeloopaccelergy/accelergy-timeloop-infrastructure@sha256:d50887ff167f534f7a3e5eeca3d28a66b35f3f9705cf3f82443527db850492bc
+    env:
+      ACCELERGY_CONFIG_SOURCE: /github/home/.config/accelergy/accelergy_config.yaml
+      MPLCONFIGDIR: /tmp/matplotlib
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify simulator and pinned source revisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ieee_revision/experiments/logs
+          {
+            date -u +RUN_UTC=%Y-%m-%dT%H:%M:%SZ
+            echo CONTAINER_IMAGE=timeloopaccelergy/accelergy-timeloop-infrastructure:latest-amd64
+            echo CONTAINER_DIGEST=sha256:d50887ff167f534f7a3e5eeca3d28a66b35f3f9705cf3f82443527db850492bc
+            command -v accelergy
+            command -v timeloop-model
+            command -v timeloop-mapper
+            accelergy -h >/dev/null
+            timeloop-model --help >/dev/null || true
+            timeloop-mapper --help >/dev/null || true
+            python3 --version
+            for repo in /home/accelergy-timeloop-infrastructure/src/timeloop /home/accelergy-timeloop-infrastructure/src/accelergy; do
+              if test -d "$repo/.git"; then git -C "$repo" rev-parse HEAD; fi
+            done
+          } > ieee_revision/experiments/logs/workload_extension_environment.txt 2>&1
+          mkdir -p "$(dirname "$ACCELERGY_CONFIG_SOURCE")"
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          roots = sorted(Path('/usr/local/share/accelergy/estimation_plug_ins').glob('*'))
+          roots = [p for p in roots if p.is_dir()]
+          if not roots:
+              raise RuntimeError('No installed Accelergy estimator plug-ins found')
+          lines = ['version: 0.4', 'estimator_plug_ins:']
+          lines.extend(f'  - {p}' for p in roots)
+          lines.extend(['primitive_components: []', 'compound_components: []',
+                        'math_functions: []', 'python_plug_ins: []',
+                        'table_plug_ins:', '  roots: []'])
+          Path(os.environ['ACCELERGY_CONFIG_SOURCE']).write_text('\n'.join(lines) + '\n')
+          PY
+          cat "$ACCELERGY_CONFIG_SOURCE" >> ieee_revision/experiments/logs/workload_extension_environment.txt
+          cat ieee_revision/experiments/logs/workload_extension_environment.txt
+
+      - name: Install parser dependencies
+        shell: bash
+        run: python3 -m pip install --user ruamel.yaml PyYAML matplotlib
+
+      - name: Run frozen mapping and paired model evaluations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 ieee_revision/experiments/scripts/extend_alexnet_workloads.py execute
+          python3 ieee_revision/experiments/scripts/extend_alexnet_workloads.py validate
+          python3 ieee_revision/experiments/scripts/extend_alexnet_workloads.py plot
+
+      - name: Final evidence checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'WORKLOAD_EXTENSION_VALIDATION=PASS' ieee_revision/experiments/processed/workload_extension_validation.txt
+          for workload in alexnet_conv3 alexnet_conv4_dense alexnet_conv5_dense; do
+            test -s "ieee_revision/experiments/raw_outputs/mapping_search/$workload/completed.marker"
+            for architecture in planar integrated_3d; do
+              test -s "ieee_revision/experiments/raw_outputs/$workload/$architecture/completed.marker"
+            done
+          done
+          test -s ieee_revision/experiments/figures/workload_dependence.pdf
+          test -s ieee_revision/experiments/figures/workload_dependence.svg
+          test -s ieee_revision/experiments/figures/workload_dependence.png
+
+      - name: Commit verified raw evidence and figure
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add ieee_revision/experiments
+          git commit -m 'Add verified AlexNet CONV3-5 workload dependence evidence'
+          git push origin HEAD:agent/full-ieee-r1-manuscript

@@ -1,0 +1,6 @@
+case,architecture,role,capacitance_fF,resistance_ohm,energy_per_toggle_fJ,propagation_rise_ps,propagation_fall_ps,mean_delay_ps
+vertical_5fF,Vertical,sensitivity,5,0.065,17.00805,9.388543,9.995898,9.6922205
+vertical_20fF,Vertical,sensitivity,20,0.065,24.5116,12.0743,12.15817,12.116235
+vertical_40fF,Vertical,nominal,40,0.065,34.59825,14.94565,14.4051,14.675375
+vertical_80fF,Vertical,sensitivity,80,0.065,54.912,20.07815,18.20009,19.13912
+planar_bump_160fF,Planar,nominal,160,0.065,95.489,29.69272,25.04152,27.36712

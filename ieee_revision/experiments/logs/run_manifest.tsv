@@ -1,0 +1,11 @@
+kind	workload	architecture_or_variant	exit_status	timestamp_utc
+mapping_search	alexnet_conv1_activation_intensive	planar	0	2026-08-14T18:00:26Z
+mapping_search	alexnet_conv2_compute_intensive	planar	0	2026-08-14T18:01:49Z
+main	alexnet_conv1_activation_intensive	planar	0	2026-08-14T18:01:53Z
+main	alexnet_conv2_compute_intensive	planar	0	2026-08-14T18:02:05Z
+main	alexnet_conv1_activation_intensive	integrated_3d	0	2026-08-14T18:04:26Z
+main	alexnet_conv2_compute_intensive	integrated_3d	0	2026-08-14T18:04:37Z
+sensitivity	alexnet_conv1_activation_intensive	2MiB	0	2026-08-14T18:04:56Z
+sensitivity	alexnet_conv1_activation_intensive	4MiB	0	2026-08-14T18:05:06Z
+sensitivity	alexnet_conv1_activation_intensive	8MiB	0	2026-08-14T18:05:22Z
+sensitivity	alexnet_conv1_activation_intensive	16MiB	0	2026-08-14T18:05:33Z

@@ -1,0 +1,6 @@
+case,architecture,role,link_capacitance_fF,link_resistance_ohm,supply_energy_per_cycle_fJ,supply_energy_per_toggle_fJ,propagation_rise_ps,propagation_fall_ps,mean_propagation_delay_ps,link_rise_time_ps,link_fall_time_ps
+vertical_5fF,vertical,sensitivity,5,0.065,34.0161,17.00805,9.388543,9.995898,9.6922205,7.642626,7.669869
+vertical_20fF,vertical,sensitivity,20,0.065,49.0232,24.5116,12.0743,12.15817,12.116235,9.517341,10.09339
+vertical_40fF,vertical,nominal,40,0.065,69.1965,34.59825,14.94565,14.4051,14.675375,12.07658,13.57172
+vertical_80fF,vertical,sensitivity,80,0.065,109.824,54.912,20.07815,18.20009,19.13912,17.74768,21.00958
+planar_bump_160fF,planar,nominal,160,0.065,190.978,95.489,29.69272,25.04152,27.36712,29.95027,36.69257

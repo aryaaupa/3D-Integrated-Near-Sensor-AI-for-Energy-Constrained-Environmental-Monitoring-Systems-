@@ -1,0 +1,6 @@
+workload,label,input_shape,output_shape,kernel,stride,macs,weights,input_activations,output_activations,intensity,source
+alexnet_conv1_activation_intensive,AlexNet CONV1,227x227x3,55x55x96,11x11,4,105415200,34848,154587,290400,219.69051862,AlexNet_layer1.yaml
+alexnet_conv2_compute_intensive,AlexNet-derived dense CONV2,31x31x96,27x27x256,5x5,1,447897600,614400,92256,186624,501.40784524,AlexNet_layer2.yaml
+alexnet_conv3,AlexNet CONV3,15x15x256,13x13x384,3x3,1,149520384,884736,57600,64896,148.44681662,AlexNet_layer3.yaml
+alexnet_conv4_dense,AlexNet-derived dense CONV4,15x15x384,13x13x384,3x3,1,224280576,1327104,86400,64896,151.70493506,AlexNet_layer4.yaml
+alexnet_conv5_dense,AlexNet-derived dense CONV5,15x15x384,13x13x256,3x3,1,149520384,884736,86400,43264,147.39785489,AlexNet_layer5.yaml

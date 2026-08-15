@@ -1,0 +1,57 @@
+ART_summary:
+    version: '0.4'
+    table_summary:
+      - name: system_top_level.inter_PE_column_spatial[1..1]
+        area: 0.0
+        primitive_estimations: Library
+      - name: system_top_level.inter_PE_spatial[1..14]
+        area: 0.0
+        primitive_estimations: Library
+      - name: system_top_level.stacked_sram[1..1]
+        area: 6466270.0
+        primitive_estimations:
+          - name: storage
+            estimator: CactiSRAM
+          - name: address_generators[0..1]
+            estimator: Aladdin_table
+      - name: system_top_level.shared_glb[1..1]
+        area: 429832.0
+        primitive_estimations:
+          - name: storage
+            estimator: CactiSRAM
+          - name: address_generators[0..1]
+            estimator: Aladdin_table
+      - name: system_top_level.ifmap_spad[1..168]
+        area: 2204.39
+        primitive_estimations:
+          - name: storage.storage[1..2048]
+            estimator: Library
+          - name: storage.comparator[1..64]
+            estimator: Library
+          - name: address_generators[0..1]
+            estimator: Aladdin_table
+      - name: system_top_level.weights_spad[1..168]
+        area: 35037.9
+        primitive_estimations:
+          - name: storage.storage[1..6144]
+            estimator: Library
+          - name: storage.comparator[1..192]
+            estimator: Library
+          - name: address_generators[0..1]
+            estimator: Aladdin_table
+      - name: system_top_level.psum_spad[1..168]
+        area: 2916.02
+        primitive_estimations:
+          - name: storage.storage[1..2048]
+            estimator: Library
+          - name: storage.comparator[1..64]
+            estimator: Library
+          - name: address_generators[0..1]
+            estimator: Aladdin_table
+      - name: system_top_level.mac[1..168]
+        area: 362.469
+        primitive_estimations:
+          - name: intadder
+            estimator: Library
+          - name: intmultiplier
+            estimator: Library

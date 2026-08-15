@@ -1,0 +1,10 @@
+PASS vertical_5fF: exit 0, nonempty raw evidence, exact PTM model hash
+PASS vertical_20fF: exit 0, nonempty raw evidence, exact PTM model hash
+PASS vertical_40fF: exit 0, nonempty raw evidence, exact PTM model hash
+PASS vertical_80fF: exit 0, nonempty raw evidence, exact PTM model hash
+PASS planar_bump_160fF: exit 0, nonempty raw evidence, exact PTM model hash
+PASS results: positive measurements and monotonic energy-capacitance sensitivity
+PASS fairness: nominal netlists differ only in case label and CLINK
+PASS traceability: 45 metric rows point to existing sources
+PASS bridge: 12 rows, top-memory 8-bit words, positive diagnostic link energy
+FINAL_VALIDATION=PASS

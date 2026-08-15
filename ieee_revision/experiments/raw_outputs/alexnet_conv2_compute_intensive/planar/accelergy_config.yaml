@@ -1,0 +1,11 @@
+version: 0.4
+estimator_plug_ins:
+  - /workspace/scratch/ae4887560717/timeloop-env/share/accelergy/estimation_plug_ins/accelergy-library-plugin
+  - /workspace/scratch/ae4887560717/timeloop-env/share/accelergy/estimation_plug_ins/accelergy-aladdin-plug-in
+  - /workspace/scratch/ae4887560717/timeloop-env/share/accelergy/estimation_plug_ins/accelergy-cacti-plug-in
+primitive_components: []
+compound_components: []
+math_functions: []
+python_plug_ins: []
+table_plug_ins:
+  roots: []
