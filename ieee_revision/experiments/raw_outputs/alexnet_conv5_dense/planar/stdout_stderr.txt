@@ -1,0 +1,8 @@
+input file: input.yaml
+execute:/usr/local/bin/accelergy input.yaml --oprefix timeloop-model. -o ./ > timeloop-model.accelergy.log 2>&1
+Start Parsering Layout
+No Layout specified, so using bandwidth based modeling
+Utilization = 0.93 | pJ/Compute =   10.501 | Cycles = 958464
+COMMAND=timeloop-model input.yaml
+
+EXIT_STATUS=0

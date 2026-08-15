@@ -1,0 +1,15 @@
+version: 0.4
+estimator_plug_ins:
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-adc-plug-in
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-aladdin-plug-in
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-cacti-plug-in
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-library-plugin
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-neurosim-plugin
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-table-based-plug-ins
+  - /usr/local/share/accelergy/estimation_plug_ins/dummy_tables
+primitive_components: []
+compound_components: []
+math_functions: []
+python_plug_ins: []
+table_plug_ins:
+  roots: []

@@ -1,3 +1,6 @@
 workload,classification,source_file,batch,input_height,input_width,input_channels,output_height,output_width,output_channels,kernel_height,kernel_width,stride_height,stride_width,mac_count,weight_volume_elements,input_activation_volume_elements,output_activation_volume_elements
 alexnet_conv1_activation_intensive,activation/memory-intensive,workspace/example_designs/layer_shapes/CONV/AlexNet/AlexNet_layer1.yaml,1,227,227,3,55,55,96,11,11,4,4,105415200,34848,154587,290400
 alexnet_conv2_compute_intensive,relatively compute-intensive,workspace/example_designs/layer_shapes/CONV/AlexNet/AlexNet_layer2.yaml,1,31,31,96,27,27,256,5,5,1,1,447897600,614400,92256,186624
+alexnet_conv3,workload-dependence extension,workspace/example_designs/layer_shapes/CONV/AlexNet/AlexNet_layer3.yaml,1,15,15,256,13,13,384,3,3,1,1,149520384,884736,57600,64896
+alexnet_conv4_dense,workload-dependence extension,workspace/example_designs/layer_shapes/CONV/AlexNet/AlexNet_layer4.yaml,1,15,15,384,13,13,384,3,3,1,1,224280576,1327104,86400,64896
+alexnet_conv5_dense,workload-dependence extension,workspace/example_designs/layer_shapes/CONV/AlexNet/AlexNet_layer5.yaml,1,15,15,384,13,13,256,3,3,1,1,149520384,884736,86400,43264

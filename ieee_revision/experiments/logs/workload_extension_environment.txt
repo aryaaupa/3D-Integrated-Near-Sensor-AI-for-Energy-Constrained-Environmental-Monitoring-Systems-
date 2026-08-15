@@ -1,0 +1,30 @@
+RUN_UTC=2026-08-15T01:12:35Z
+CONTAINER_IMAGE=timeloopaccelergy/accelergy-timeloop-infrastructure:latest-amd64
+CONTAINER_DIGEST=sha256:d50887ff167f534f7a3e5eeca3d28a66b35f3f9705cf3f82443527db850492bc
+/usr/local/bin/accelergy
+/usr/local/bin/timeloop-model
+/usr/local/bin/timeloop-mapper
+2026-08-15 01:12:35 INFO            _                _                      
+2026-08-15 01:12:35 INFO           / \   ___ ___ ___| | ___ _ __ __ _ _   _ 
+2026-08-15 01:12:35 INFO          / _ \ / __/ __/ _ \ |/ _ \ '__/ _` | | | |
+2026-08-15 01:12:35 INFO         / ___ \ (_| (_|  __/ |  __/ | | (_| | |_| |
+2026-08-15 01:12:35 INFO        /_/   \_\___\___\___|_|\___|_|  \__, |\__, |
+2026-08-15 01:12:35 INFO                                        |___/ |___/ 
+ERROR: Input configuration file does not end with .cfg, .yml, or .yaml
+ERROR: Input configuration file does not end with .cfg, .yml, or .yaml
+Python 3.10.12
+version: 0.4
+estimator_plug_ins:
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-adc-plug-in
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-aladdin-plug-in
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-cacti-plug-in
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-library-plugin
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-neurosim-plugin
+  - /usr/local/share/accelergy/estimation_plug_ins/accelergy-table-based-plug-ins
+  - /usr/local/share/accelergy/estimation_plug_ins/dummy_tables
+primitive_components: []
+compound_components: []
+math_functions: []
+python_plug_ins: []
+table_plug_ins:
+  roots: []

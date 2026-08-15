@@ -1,0 +1,8 @@
+PASS alexnet_conv1_activation_intensive: raw outputs complete; problem, mapping, compute, MACs, cycles, and utilization match
+PASS alexnet_conv2_compute_intensive: raw outputs complete; problem, mapping, compute, MACs, cycles, and utilization match
+PASS alexnet_conv3: raw outputs complete; problem, mapping, compute, MACs, cycles, and utilization match
+PASS alexnet_conv4_dense: raw outputs complete; problem, mapping, compute, MACs, cycles, and utilization match
+PASS alexnet_conv5_dense: raw outputs complete; problem, mapping, compute, MACs, cycles, and utilization match
+PASS traceability: every extended metric resolves to an existing raw source
+PASS formulas: all five energy reductions recomputed from parsed totals
+WORKLOAD_EXTENSION_VALIDATION=PASS

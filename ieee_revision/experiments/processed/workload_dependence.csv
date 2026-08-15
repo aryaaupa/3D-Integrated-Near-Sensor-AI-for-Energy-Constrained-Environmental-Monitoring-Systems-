@@ -1,0 +1,6 @@
+workload,label,macs_per_tensor_element,total_energy_reduction_percent,intensity_derivation,energy_source
+alexnet_conv1_activation_intensive,CONV1,219.69051862,69.26897292,mac_count/(weight_volume_elements+input_activation_volume_elements+output_activation_volume_elements),processed/comparison.csv from paired raw Timeloop stats
+alexnet_conv2_compute_intensive,CONV2,501.40784524,27.13562173,mac_count/(weight_volume_elements+input_activation_volume_elements+output_activation_volume_elements),processed/comparison.csv from paired raw Timeloop stats
+alexnet_conv3,CONV3,148.44681662,8.355732627,mac_count/(weight_volume_elements+input_activation_volume_elements+output_activation_volume_elements),processed/comparison.csv from paired raw Timeloop stats
+alexnet_conv4_dense,CONV4,151.70493506,35.36269266,mac_count/(weight_volume_elements+input_activation_volume_elements+output_activation_volume_elements),processed/comparison.csv from paired raw Timeloop stats
+alexnet_conv5_dense,CONV5,147.39785489,36.70755474,mac_count/(weight_volume_elements+input_activation_volume_elements+output_activation_volume_elements),processed/comparison.csv from paired raw Timeloop stats
