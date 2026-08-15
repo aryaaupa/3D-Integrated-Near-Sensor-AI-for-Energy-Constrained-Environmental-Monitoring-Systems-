@@ -98,6 +98,11 @@ def validate_run(run_dir: Path, prefix: str) -> None:
     for filename in required:
         path = run_dir / filename
         if not path.is_file() or path.stat().st_size == 0:
+            print(f"RUN_DIRECTORY_CONTENTS={sorted(p.name for p in run_dir.iterdir())}")
+            log = run_dir / "stdout_stderr.txt"
+            if log.is_file():
+                print(f"--- {log} ---")
+                print(log.read_text(errors="replace"))
             raise FileNotFoundError(path)
     combined = (run_dir / "stdout_stderr.txt").read_text(errors="replace")
     combined += (run_dir / f"{prefix}.accelergy.log").read_text(errors="replace")
