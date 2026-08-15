@@ -1,0 +1,11 @@
+metric_group,processed_source,raw_source_pattern,calculation
+workload_dimensions,ieee_revision/experiments/workloads/workload_summary.csv,ieee_revision/experiments/raw_outputs/*/*/input.yaml,direct parse
+architecture_energy,ieee_revision/experiments/processed/results.csv,ieee_revision/experiments/raw_outputs/*/*/timeloop-model.stats.txt,pJ/1e6 to uJ
+energy_reduction,ieee_revision/experiments/processed/comparison.csv,paired timeloop-model.stats.txt,100*(planar-localized)/planar
+cycles_utilization,ieee_revision/experiments/processed/results.csv,paired timeloop-model.stats.txt,direct parse
+component_energy,ieee_revision/experiments/processed/results.csv,paired timeloop-model.stats.txt,direct parser categories
+capacity_sensitivity,ieee_revision/experiments/processed/sensitivity.csv,ieee_revision/experiments/raw_outputs/sensitivity/*/*/timeloop-model.stats.txt,paired planar formula
+link_energy_delay,ieee_revision/spice_validation/processed/link_results.csv,ieee_revision/spice_validation/raw_outputs/*/ngspice_stdout_stderr.txt,measure parse and deterministic unit conversion
+link_reductions,ieee_revision/spice_validation/processed/link_comparison.csv,nominal 40fF and 160fF raw outputs,100*(planar-vertical)/planar
+ptm_identity,ieee_revision/reviewer_corrections/MODEL_TOOL_PROVENANCE_AUDIT.md,ieee_revision/spice_validation/models/45nm_HP.pm,header/hash/card inspection
+temperature_accuracy_boundary,ieee_revision/reviewer_corrections/temperature_accuracy_evidence_audit.csv,repository evidence inventory,no supported metric
