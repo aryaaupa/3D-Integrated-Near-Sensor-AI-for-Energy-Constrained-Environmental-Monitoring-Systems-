@@ -14,6 +14,7 @@ import csv
 import importlib.util
 import json
 import math
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -116,7 +117,9 @@ def validate_run(run_dir: Path, prefix: str) -> None:
 def execute() -> None:
     builder = configure_builder()
     builder.prepare()
-    config = REPO / "ieee_revision/setup_evidence/accelergy_config.yaml"
+    config = Path(os.environ.get("ACCELERGY_CONFIG_SOURCE", str(Path.home() / ".config/accelergy/accelergy_config.yaml")))
+    if not config.is_file() or config.stat().st_size == 0:
+        raise FileNotFoundError(f"Installed Accelergy configuration unavailable: {config}")
     manifest = EXP / "logs/workload_extension_manifest.tsv"
     manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.write_text("kind\tworkload\tarchitecture\texit_status\n")

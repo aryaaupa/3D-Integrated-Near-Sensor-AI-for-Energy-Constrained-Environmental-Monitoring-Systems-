@@ -19,6 +19,10 @@ jobs:
     timeout-minutes: 240
     container:
       image: timeloopaccelergy/accelergy-timeloop-infrastructure:latest-amd64
+    env:
+      HOME: /root
+      ACCELERGY_CONFIG_SOURCE: /root/.config/accelergy/accelergy_config.yaml
+      MPLCONFIGDIR: /tmp/matplotlib
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,6 +42,8 @@ jobs:
             timeloop-model --help >/dev/null || true
             timeloop-mapper --help >/dev/null || true
             python3 --version
+            test -s "$ACCELERGY_CONFIG_SOURCE"
+            cat "$ACCELERGY_CONFIG_SOURCE"
             for repo in /home/accelergy-timeloop-infrastructure/src/timeloop /home/accelergy-timeloop-infrastructure/src/accelergy; do
               if test -d "$repo/.git"; then git -C "$repo" rev-parse HEAD; fi
             done
