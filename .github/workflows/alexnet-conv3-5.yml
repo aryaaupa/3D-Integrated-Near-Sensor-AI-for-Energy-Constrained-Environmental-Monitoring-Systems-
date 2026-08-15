@@ -41,12 +41,26 @@ jobs:
             timeloop-model --help >/dev/null || true
             timeloop-mapper --help >/dev/null || true
             python3 --version
-            test -s "$ACCELERGY_CONFIG_SOURCE"
-            cat "$ACCELERGY_CONFIG_SOURCE"
             for repo in /home/accelergy-timeloop-infrastructure/src/timeloop /home/accelergy-timeloop-infrastructure/src/accelergy; do
               if test -d "$repo/.git"; then git -C "$repo" rev-parse HEAD; fi
             done
           } > ieee_revision/experiments/logs/workload_extension_environment.txt 2>&1
+          mkdir -p "$(dirname "$ACCELERGY_CONFIG_SOURCE")"
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          roots = sorted(Path('/usr/local/share/accelergy/estimation_plug_ins').glob('*'))
+          roots = [p for p in roots if p.is_dir()]
+          if not roots:
+              raise RuntimeError('No installed Accelergy estimator plug-ins found')
+          lines = ['version: 0.4', 'estimator_plug_ins:']
+          lines.extend(f'  - {p}' for p in roots)
+          lines.extend(['primitive_components: []', 'compound_components: []',
+                        'math_functions: []', 'python_plug_ins: []',
+                        'table_plug_ins:', '  roots: []'])
+          Path(os.environ['ACCELERGY_CONFIG_SOURCE']).write_text('\n'.join(lines) + '\n')
+          PY
+          cat "$ACCELERGY_CONFIG_SOURCE" >> ieee_revision/experiments/logs/workload_extension_environment.txt
           cat ieee_revision/experiments/logs/workload_extension_environment.txt
 
       - name: Install parser dependencies
