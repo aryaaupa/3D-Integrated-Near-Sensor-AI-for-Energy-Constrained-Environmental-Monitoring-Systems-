@@ -8,7 +8,7 @@ Corresponding author: Arya Upadhyay (e-mail: arya.upadhyay@utexas.edu).
 
 Abstract
 
-Data movement can dominate the energy of edge artificial-intelligence accelerators, especially when sensor-derived activations and model parameters repeatedly traverse an external-memory interface. This paper presents a three-tier near-sensor architecture that vertically organizes sensing, localized memory, and compute. The principal architectural mechanism is evaluated with Timeloop and Accelergy using CACTI-backed memory characterization. Two AlexNet convolution layers are executed on the same 168-processing-element, 45-nm accelerator with identical arithmetic precision, mappings, lower memory hierarchy, and 1-GHz clock assumption. Replacing the modeled external LPDDR4 level with a 2-MiB localized SRAM reduces total energy from 7,343.23 to 2,256.65 µJ (69.27%) for activation/memory-intensive CONV1 and from 3,103.78 to 2,261.55 µJ (27.14%) for relatively compute-intensive CONV2. Timeloop cycles and utilization remain unchanged, so these results establish an energy-locality benefit rather than an inference-latency improvement. A 2–16-MiB CACTI-backed sweep shows that the reduction for CONV1 decreases from 69.27% to 28.95% as SRAM capacity and access cost increase. Complementary ngspice 42 transient simulation with the exact public 45-nm high-performance PTM card evaluates a representative link. Reducing the lumped load from a 160-fF planar proxy to a literature-backed 40-fF vertical proxy lowers switching energy from 95.489 to 34.598 fJ/toggle (63.77%) and mean propagation delay from 27.367 to 14.675 ps (46.38%). The link results are circuit-level quantities and are not combined with the architectural energy totals.
+Data movement can dominate edge artificial-intelligence accelerator energy when activations and model parameters repeatedly traverse an external-memory interface. This paper presents a three-tier near-sensor architecture that vertically organizes sensing, localized memory, and compute. Timeloop and Accelergy, with CACTI-backed memory characterization, evaluate the architectural mechanism. Two workloads—AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration—execute on the same 168-processing-element, 45-nm accelerator with identical precision, mappings, lower memory hierarchy, and 1-GHz clock assumption. Replacing modeled external LPDDR4 with a 2-MiB localized SRAM reduces total energy from 7,343.23 to 2,256.65 µJ (69.27%) for CONV1 and from 3,103.78 to 2,261.55 µJ (27.14%) for dense CONV2. Timeloop cycles and utilization remain unchanged, establishing an energy-locality benefit rather than an inference-latency improvement. A 2–16-MiB CACTI-backed sweep shows that the CONV1 reduction decreases from 69.27% to 28.95% as SRAM capacity and access cost increase. Complementary ngspice 42 simulation with the exact public 45-nm high-performance PTM card compares a 40-fF TSV reference and a conservative 160-fF planar-link proxy derived from the reported capacitance relationship. Switching energy decreases from 95.489 to 34.598 fJ/toggle (63.77%), and mean propagation delay decreases from 27.367 to 14.675 ps (46.38%). These circuit-level results are reported separately from the architecture-level energy totals and do not imply an equivalent inference-latency improvement. Together, the two evaluations show that the benefit of 3D locality depends on both workload-level memory behavior and physical communication loading.
 
 Index Terms
 
@@ -22,17 +22,17 @@ Near-sensor workloads sharpen this problem. A sensor can continuously generate d
 
 Existing work provides important but distinct reference points. CamJ models system-level energy for computational CMOS image sensors and explores 2D/3D sensing organizations [7]. J3DAI demonstrates a specialized three-wafer CMOS image sensor containing a DNN accelerator [8]. These works establish that in-sensor and vertically integrated AI are credible research directions. The question addressed here is narrower and controlled: with workload, compute resources, precision, lower memory hierarchy, and mapping held fixed, how much does modeled energy change when the highest memory level is moved from external LPDDR4 to localized on-stack SRAM? This formulation isolates memory placement instead of comparing unrelated accelerators.
 
-We answer that question using established architecture tools and then test the associated electrical motivation independently. Timeloop characterizes mapping, cycles, utilization, and memory activity, while Accelergy combines those action counts with component energy estimates; SRAM action energies are produced through the Accelergy CACTI workflow [10]–[13]. Two convolution layers from the repository's AlexNet configuration [14] provide contrasting behavior. CONV1 has dimensions 227 × 227 × 3 to 55 × 55 × 96 with an 11 × 11 kernel and stride four; CONV2 has dimensions 31 × 31 × 96 to 27 × 27 × 256 with a 5 × 5 kernel and stride one. Their architecture-oriented intensity indicators are 219.69 and 501.41 MACs per combined weight/input/output tensor element, respectively. The indicator is used to distinguish the two selected layers and is not presented as a roofline operational intensity.
+We answer that question using established architecture tools and then test the associated electrical motivation independently. Timeloop characterizes mapping, cycles, utilization, and memory activity, while Accelergy combines those action counts with component energy estimates; SRAM action energies are produced through the Accelergy CACTI workflow [10]–[13]. Two convolution workloads provide contrasting behavior. AlexNet CONV1 [14] has dimensions 227 × 227 × 3 to 55 × 55 × 96 with an 11 × 11 kernel and stride four. The AlexNet-derived dense CONV2 configuration uses the spatial dimensions of AlexNet CONV2 but models each of 256 filters as a dense 5 × 5 × 96 kernel, rather than using the canonical grouped connectivity. Their architecture-oriented intensity indicators are 219.69 and 501.41 MACs per combined weight/input/output tensor element, respectively. The indicator distinguishes the selected workloads and is not presented as a roofline operational intensity.
 
-The controlled Timeloop/Accelergy evaluation produces a deliberately nonuniform result. For CONV1, total modeled energy decreases from 7,343.23 to 2,256.65 µJ, a 69.27% reduction. For CONV2, it decreases from 3,103.78 to 2,261.55 µJ, a 27.14% reduction. The split is the primary scientific finding: highest-level localization helps both evaluated layers, but its relative benefit is much larger for the more memory-sensitive case. Timeloop reports 732,050 cycles for CONV1 and 3,110,400 cycles for CONV2 in both organizations, with utilization 0.8571. Because the experiment fixes the mapping and does not impose an external-bandwidth timing constraint, no architectural inference-latency improvement is claimed.
+The controlled Timeloop/Accelergy evaluation produces a deliberately nonuniform result. For AlexNet CONV1, total modeled energy decreases from 7,343.23 to 2,256.65 µJ, a 69.27% reduction. For the dense CONV2 configuration, it decreases from 3,103.78 to 2,261.55 µJ, a 27.14% reduction. The split is the primary scientific finding: highest-level localization helps both evaluated workloads, but its relative benefit is much larger for the more memory-sensitive case. Timeloop reports 732,050 cycles for CONV1 and 3,110,400 cycles for dense CONV2 in both organizations, with utilization 0.8571. Because the experiment fixes the mapping and does not impose an external-bandwidth timing constraint, no architectural inference-latency improvement is claimed.
 
-A second experiment addresses a separable circuit question. Short vertical connections can present lower electrical loading than package-level alternatives, but Timeloop does not transistor-simulate those links. We therefore use ngspice 42 with the exact public 45nm_HP.pm card distributed by the University of Minnesota PTM archive [16]–[18]. An identical CMOS driver, receiver, fanout, supply, input slew, and series resistance is used for both link proxies; only the lumped capacitance changes. The nominal 40-fF vertical value comes from measured 45-nm stacked hardware [15], and 160 fF is a disclosed conservative planar proxy derived from the same source. The simulated link switching energy decreases by 63.77%, and mean link propagation delay decreases by 46.38%. These are link-level quantities, not whole-inference energy or latency improvements, and they are not arithmetically combined with the Timeloop/Accelergy percentages.
+A second experiment addresses a separable circuit question. Short vertical connections can present lower electrical loading than package-level alternatives, but Timeloop does not transistor-simulate those links. We therefore use ngspice 42 with the exact public 45nm_HP.pm card distributed by the University of Minnesota PTM archive [16]–[18]. An identical CMOS driver, receiver, fanout, supply, input slew, and series resistance is used for both link proxies; only the lumped capacitance changes. Batra et al. report approximately 40 fF for the evaluated TSV structure and state that bump capacitance exceeds four times the TSV capacitance [15]. We therefore use 160 fF as a conservative planar-link load proxy for the controlled circuit comparison; it is not presented as a measured bump capacitance. The simulated link switching energy decreases by 63.77%, and mean link propagation delay decreases by 46.38%. These are link-level quantities, not whole-inference energy or latency improvements, and they are not arithmetically combined with the Timeloop/Accelergy percentages.
 
 The contributions are as follows:
 
 1. A three-tier sensor–localized-memory–compute organization that exposes memory placement and link loading as two separable evaluation questions.
 2. A reproducible, controlled Timeloop/Accelergy evaluation with CACTI-backed SRAM characterization, fixed workload mappings, and identical compute assumptions.
-3. A workload-dependent result: 69.27% modeled total-energy reduction for AlexNet CONV1 and 27.14% for CONV2, with absolute energy, cycles, utilization, and memory events reported per workload.
+3. A workload-dependent result: 69.27% modeled total-energy reduction for AlexNet CONV1 and 27.14% for the AlexNet-derived dense CONV2 configuration, with absolute energy, cycles, utilization, and memory events reported per workload.
 4. A 2–16-MiB localized-SRAM sensitivity study showing that larger capacity is not monotonically better in the modeled energy objective.
 5. An independent transistor-level ngspice 42 link study using the exact 45-nm HP PTM card and literature-backed interconnect parameters.
 
@@ -118,19 +118,19 @@ All experiment artifacts are versioned. The architecture evidence is preserved a
 
 B. Workload Selection and Characterization
 
-We evaluate exactly two convolution layers from the repository's established AlexNet configuration [14]. Table I gives their tensor dimensions. For batch size one, the MAC count is
+We evaluate exactly two convolution workloads. The first is AlexNet CONV1 [14]. The second workload uses the spatial dimensions of AlexNet CONV2 but is modeled as a dense 5 × 5 convolution over all 96 input channels, consistent with the evaluated Timeloop workload configuration. We therefore call it the AlexNet-derived dense CONV2 configuration rather than canonical AlexNet CONV2. Table I gives both tensor definitions. For batch size one, the MAC count is
 
 N_MAC = P × Q × K × C × R × S,
 
-where P and Q are output height and width, K is the output-channel count, C is the input-channel count, and R and S are kernel height and width. This gives 105,415,200 MACs for CONV1 and 447,897,600 for CONV2.
+where P and Q are output height and width, K is the output-channel count, C is the input-channel count, and R and S are kernel height and width. This gives 105,415,200 MACs for AlexNet CONV1 and 447,897,600 for the dense CONV2 configuration.
 
 An architecture-oriented intensity indicator is defined as
 
 I_tensor = N_MAC / (N_W + N_I + N_O),
 
-where N_W, N_I, and N_O are weight, input-activation, and output-activation element counts. The resulting values are 219.69 for CONV1 and 501.41 for CONV2. CONV1 is therefore termed activation/memory-intensive relative to CONV2; CONV2 is termed relatively compute-intensive. This indicator does not include cache-line granularity or achieved bandwidth and is not a roofline operational intensity.
+where N_W, N_I, and N_O are weight, input-activation, and output-activation element counts. The resulting values are 219.69 for AlexNet CONV1 and 501.41 for dense CONV2. CONV1 is therefore termed activation/memory-intensive relative to dense CONV2; dense CONV2 is termed relatively compute-intensive. This indicator does not include cache-line granularity or achieved bandwidth and is not a roofline operational intensity.
 
-With 8-bit weights and inputs and 16-bit outputs, the complete tensor footprints are 770,235 bytes for CONV1 and 1,079,904 bytes for CONV2. The nominal 2-MiB localized SRAM is the smallest tested power-of-two capacity that exceeds both footprints. The experiment is layer-level, not a full-network execution or accuracy evaluation.
+With 8-bit weights and inputs and 16-bit outputs, the complete tensor footprints are 770,235 bytes for CONV1 and 1,079,904 bytes for dense CONV2. The nominal 2-MiB localized SRAM is the smallest tested power-of-two capacity that exceeds both footprints. The experiment is layer-level, not a full-network execution or accuracy evaluation.
 
 [INSERT TABLE I HERE]
 
@@ -176,7 +176,7 @@ This protocol deliberately excludes mapping co-optimization for the localized ca
 
 H. Evaluation Metrics
 
-Reported architecture metrics are total energy, energy per Timeloop compute, cycles, utilization, highest-level reads and writes, external-DRAM events, and nominal latency calculated from the documented 1-ns period. For planar-to-localized total-energy reduction,
+Reported architecture metrics are total energy, energy per Timeloop compute, cycles, utilization, highest-level reads and writes, external-DRAM events, and cycle-derived execution time calculated from the documented 1-ns period. For planar-to-localized total-energy reduction,
 
 ΔE(w) = 100 × [E_planar(w) − E_local(w)] / E_planar(w).
 
@@ -190,7 +190,7 @@ J. Transistor-Level Communication-Link Validation
 
 Circuit simulation uses ngspice 42 from Ubuntu package 42+ds-3build1, with the version-42 manual [18]. The exact device card is 45nm_HP.pm, Git blob 160d7da3c5f3a6c0037332df5535dc07d62720ae, SHA-256 c9ed2e513523c57a76912a35b2860cb85e4aaa3402b69757d84efa9cc2fb8410. Its header reads “PTM High Performance 45nm Metal Gate / High-K / Strained-Si” and states nominal V_DD=1.0 V. The file declares level=54, compact-model version=4.0, and tnom=27. The exact card is attributed to the University of Minnesota PTM archive [17]; Zhao and Cao [16] are cited for the predictive-model methodology and model family rather than as the byte-level card source.
 
-The testbench contains a CMOS output driver with 4-µm NMOS and 8-µm PMOS widths, a 1-µm/2-µm CMOS receiver, and an identical fanout-of-one load; all channel lengths are 45 nm. The input is a 1-V pulse with 20-ps rise/fall time and 1-ns period. Both nominal cases use 65 mΩ series resistance. The measured 40-fF vertical capacitance and 65-mΩ resistance come from Batra et al. [15]. That work reports the 40-fF TSV capacitance as less than one quarter of bump-bond capacitance; the planar proxy is therefore set to exactly 160 fF, a conservative deterministic lower bound, rather than an arbitrary fit.
+The testbench contains a CMOS output driver with 4-µm NMOS and 8-µm PMOS widths, a 1-µm/2-µm CMOS receiver, and an identical fanout-of-one load; all channel lengths are 45 nm. The input is a 1-V pulse with 20-ps rise/fall time and 1-ns period. Both nominal cases use 65 mΩ series resistance. Batra et al. report approximately 40 fF for the evaluated TSV structure and state that bump capacitance exceeds four times the TSV capacitance [15]. We therefore use 160 fF as a conservative planar-link load proxy for the controlled circuit comparison; it is not presented as a measured bump capacitance. The 65-mΩ series resistance is also taken from Batra et al. [15].
 
 The supply energy for one steady-state 1-ns cycle is
 
@@ -204,7 +204,7 @@ These definitions measure a driver/link/receiver path. They do not measure an LP
 
 K. Interconnect-Capacitance Sensitivity
 
-The vertical-link capacitance is swept over 5, 20, 40, and 80 fF while the model card, transistors, input, supply, temperature, resistance, integration window, and measurement thresholds remain unchanged. The sweep spans one eighth to twice the measured nominal 40-fF value. The planar 160-fF proxy is plotted on the same axes for context but is not relabeled as a measured bump capacitance.
+The vertical-link capacitance is swept over 5, 20, 40, and 80 fF while the model card, transistors, input, supply, temperature, resistance, integration window, and measurement thresholds remain unchanged. The sweep spans one eighth to twice the 40-fF TSV reference. The conservative 160-fF planar-link proxy is plotted on the same axes for context and is not labeled as a measured bump capacitance.
 
 L. Reproducibility and Traceability
 
@@ -214,7 +214,7 @@ V. Results and Evaluation
 
 A. Workload-Level Energy Results
 
-Table III and Fig. 4 report absolute layer energy. For CONV1, the planar configuration consumes 7,343.23 µJ and the localized configuration consumes 2,256.65 µJ. The deterministic reduction is 69.27%. Energy per Timeloop compute falls from 69.660 to 21.407 pJ, also a 69.27% reduction within rounding. For CONV2, total energy changes from 3,103.78 to 2,261.55 µJ, a 27.14% reduction, while energy per compute changes from 6.930 to 5.049 pJ.
+Table III and Fig. 4 report absolute layer energy. For AlexNet CONV1, the planar configuration consumes 7,343.23 µJ and the localized configuration consumes 2,256.65 µJ. The deterministic reduction is 69.27%. Energy per Timeloop compute falls from 69.660 to 21.407 pJ, also a 69.27% reduction within rounding. For the AlexNet-derived dense CONV2 configuration, total energy changes from 3,103.78 to 2,261.55 µJ, a 27.14% reduction, while energy per compute changes from 6.930 to 5.049 pJ.
 
 [INSERT FIG. 4 HERE]
 
@@ -222,27 +222,27 @@ Caption: Fig. 4. Timeloop/Accelergy total energy for the planar and localized-me
 
 [INSERT FIG. 5 HERE]
 
-Caption: Fig. 5. Energy per Timeloop compute. The large difference between CONV1 and CONV2 reflects workload dependence rather than a universal 3D scaling factor.
+Caption: Fig. 5. Energy per Timeloop compute. The large difference between AlexNet CONV1 and dense CONV2 reflects workload dependence rather than a universal 3D scaling factor.
 
 [INSERT TABLE III HERE]
 
 Caption: TABLE III. Timeloop/Accelergy results.
 
-The total-energy difference is not accompanied by a Timeloop cycle difference. CONV1 takes 732,050 cycles in both configurations, and CONV2 takes 3,110,400 cycles in both. Utilization is 0.8571 in all four runs. At the nominal 1-GHz assumption, those counts correspond to 732.05 and 3,110.40 µs, respectively, but these values contain no external-interface bandwidth penalty. The measured architectural effect is therefore energy reduction at unchanged modeled cycles.
+The total-energy difference is not accompanied by a Timeloop cycle difference. AlexNet CONV1 takes 732,050 cycles in both configurations, and dense CONV2 takes 3,110,400 cycles in both. Utilization is 0.8571 in all four runs. At the nominal 1-GHz assumption, the cycle-derived execution times are 732.05 and 3,110.40 µs, respectively, but these values contain no external-interface bandwidth penalty. The measured architectural effect is therefore energy reduction at unchanged modeled cycles.
 
 B. Workload Dependence
 
-The contrast between 69.27% for CONV1 and 27.14% for CONV2 is more informative than a single average. CONV1 performs 105,415,200 MACs but touches large feature maps relative to its weight volume. Its tensor intensity indicator is 219.69 MACs per combined tensor element. CONV2 performs 447,897,600 MACs and has an indicator of 501.41. Thus, the external-memory term occupies a larger share of the planar CONV1 result, and substituting a lower-cost local memory produces a larger relative change.
+The contrast between 69.27% for AlexNet CONV1 and 27.14% for dense CONV2 is more informative than a single average. CONV1 performs 105,415,200 MACs but touches large feature maps relative to its weight volume. Its tensor intensity indicator is 219.69 MACs per combined tensor element. Dense CONV2 performs 447,897,600 MACs and has an indicator of 501.41. Thus, the external-memory term occupies a larger share of the planar CONV1 result, and substituting a lower-cost local memory produces a larger relative change.
 
-The component values are consistent with that interpretation. CONV1 highest-level memory energy is 6,775.052 µJ in the planar run and 1,688.475 µJ in the localized run. Its lower SRAM/local-buffer energy (526.162 µJ) and compute energy (42.013 µJ) are identical between architectures. For CONV2, highest-level memory energy changes from 1,121.624 to 279.387 µJ, while lower SRAM/local-buffer energy remains 1,803.648 µJ and compute energy remains 178.510 µJ. The unchanged terms are a direct consequence of the fixed mapping and compute hierarchy.
+The component values are consistent with that interpretation. CONV1 highest-level memory energy is 6,775.052 µJ in the planar run and 1,688.475 µJ in the localized run. Its lower SRAM/local-buffer energy (526.162 µJ) and compute energy (42.013 µJ) are identical between architectures. For dense CONV2, highest-level memory energy changes from 1,121.624 to 279.387 µJ, while lower SRAM/local-buffer energy remains 1,803.648 µJ and compute energy remains 178.510 µJ. The unchanged terms are a direct consequence of the fixed mapping and compute hierarchy.
 
-These results do not establish that every memory-sensitive layer will save 69.27%, or that every compute-intensive layer will save 27.14%. They establish that, for two traceable layers under one controlled architecture, the benefit of highest-level localization depends strongly on workload behavior.
+These results do not establish that every memory-sensitive layer will save 69.27%, or that every compute-intensive layer will save 27.14%. They establish that, for two traceable workload configurations under one controlled architecture, the benefit of highest-level localization depends strongly on workload behavior.
 
 C. Memory-Localization Analysis
 
-For CONV1, Timeloop reports 105,569,787 highest-level reads and 290,400 highest-level writes in both architectures. For CONV2, it reports 17,338,752 reads and 186,624 writes in both. The fixed mapping therefore yields a 0% reduction in highest-level event count.
+For AlexNet CONV1, Timeloop reports 105,569,787 highest-level reads and 290,400 highest-level writes in both architectures. For dense CONV2, it reports 17,338,752 reads and 186,624 writes in both. The fixed mapping therefore yields a 0% reduction in highest-level event count.
 
-The physical destination of those events is different. The planar model contains LPDDR4, so its external-DRAM event totals are 105,860,187 for CONV1 and 17,525,376 for CONV2. The localized model contains no DRAM component, so external-DRAM events are zero and the corresponding activity terminates in stacked SRAM. This is a 100% reduction at the modeled external-DRAM interface, not a 100% reduction in total data movement. The wording “external traffic is eliminated in the localized hierarchy” is valid only with that interface explicitly named.
+The physical destination of those events is different. The planar model contains LPDDR4, so its external-DRAM event totals are 105,860,187 for CONV1 and 17,525,376 for dense CONV2. The localized model contains no DRAM component, so external-DRAM events are zero and the corresponding activity terminates in stacked SRAM. This is a 100% reduction at the modeled external-DRAM interface, not a 100% reduction in total data movement. The wording “external traffic is eliminated in the localized hierarchy” is valid only with that interface explicitly named.
 
 D. Localized-Memory Capacity Sensitivity
 
@@ -256,7 +256,7 @@ The trend demonstrates that “more local SRAM” is not a monotonic energy impr
 
 E. Transistor-Level Link Energy
 
-Table IV gives the nominal link results. The 160-fF planar bump-load proxy consumes 95.489 fJ/toggle, whereas the literature-backed 40-fF vertical proxy consumes 34.598 fJ/toggle. With identical devices and stimulus, this is a 63.77% switching-energy reduction. The result is conditional on the predictive 45-nm model and lumped testbench; it is not an extracted package or LPDDR4-I/O result.
+Table IV gives the nominal link results. The conservative 160-fF planar-link load proxy consumes 95.489 fJ/toggle, whereas the 40-fF TSV reference consumes 34.598 fJ/toggle. With identical devices and stimulus, this is a 63.77% switching-energy reduction. The result is conditional on the predictive 45-nm model and lumped testbench; it is not an extracted package or LPDDR4-I/O result.
 
 [INSERT TABLE IV HERE]
 
@@ -266,11 +266,11 @@ Across the vertical capacitance sweep, energy/toggle is 17.008, 24.512, 34.598, 
 
 [INSERT FIG. 7 HERE]
 
-Caption: Fig. 7. ngspice supply energy per toggle versus lumped link capacitance. The 40-fF point is the nominal literature-backed vertical proxy; 160 fF is the disclosed conservative planar proxy.
+Caption: Fig. 7. ngspice supply energy per toggle versus lumped link capacitance. The 40-fF point is the TSV reference; 160 fF is the conservative planar-link proxy derived from the reported capacitance relationship, not a measured bump capacitance.
 
 F. Transistor-Level Link Delay
 
-Mean propagation delay is 27.367 ps for the 160-fF planar proxy and 14.675 ps for the 40-fF vertical proxy, a 46.38% reduction. The 5-, 20-, 40-, and 80-fF vertical sweep produces 9.692, 12.116, 14.675, and 19.139 ps, respectively (Fig. 8). The nominal rise/fall propagation delays are 29.693/25.042 ps for the planar proxy and 14.946/14.405 ps for the vertical proxy.
+Mean propagation delay is 27.367 ps for the conservative 160-fF planar-link proxy and 14.675 ps for the 40-fF TSV reference, a 46.38% reduction. The 5-, 20-, 40-, and 80-fF vertical sweep produces 9.692, 12.116, 14.675, and 19.139 ps, respectively (Fig. 8). The nominal rise/fall propagation delays are 29.693/25.042 ps for the planar proxy and 14.946/14.405 ps for the vertical proxy.
 
 [INSERT FIG. 8 HERE]
 
@@ -298,31 +298,27 @@ VII. Discussion
 
 The first insight is that memory placement can substantially change modeled energy even when the required computation and event count do not change. For each workload, the planar and localized cases execute identical MAC counts, loop mappings, lower-buffer activity, cycles, and utilization. The energy difference arises because the same highest-level actions use different component costs. This is a direct demonstration of why an access count alone is not an energy result: placement and memory technology determine the energy assigned to each action.
 
-Second, the benefit is strongly workload dependent. CONV1 and CONV2 do not support a universal “approximately 70%” claim. Their reductions differ by more than forty percentage points, consistent with the much higher planar highest-level contribution in CONV1. A manuscript or design process that reports only an average would hide this central result. Workload selection and layer-by-layer characterization are therefore necessary when considering memory localization.
+Second, the benefit is strongly workload dependent. AlexNet CONV1 and the AlexNet-derived dense CONV2 configuration do not support a universal “approximately 70%” claim. Their reductions differ by more than forty percentage points, consistent with the much higher planar highest-level contribution in CONV1. A manuscript or design process that reports only an average would hide this central result. Workload selection and layer-by-layer characterization are therefore necessary when considering memory localization.
 
 Third, localized capacity is not a monotonic “more is always better” variable. In the 2–16-MiB sweep, every point fits the selected CONV1 tensors, so extra capacity does not avoid an additional modeled transfer. Instead, the larger CACTI-characterized array costs more per action, and the energy reduction decreases. A complete system will trade this access-energy penalty against full-network working-set retention, area, yield, routing, and concurrency. The layer result identifies the tradeoff but does not select a network-optimal capacity.
 
-Fourth, the ngspice experiment independently supports the electrical motivation for shorter or lower-load communication. Under identical devices and stimulus, the literature-backed 40-fF vertical proxy has lower switching energy and propagation delay than the 160-fF planar proxy, and the vertical sweep is monotonic over 5–80 fF. The testbench is intentionally small enough to audit. It does not include pad drivers, ESD, clocking, equalization, coupling, inductance, or extracted package wiring, so its absolute values should not be generalized to a commercial external-memory interface.
+Fourth, the ngspice experiment independently supports the electrical motivation for shorter or lower-load communication. Under identical devices and stimulus, the 40-fF TSV reference has lower switching energy and propagation delay than the conservative 160-fF planar-link proxy, and the vertical sweep is monotonic over 5–80 fF. The testbench is intentionally small enough to audit. The 160-fF value is derived from the capacitance relationship reported by Batra et al. [15] and is not a measured bump capacitance. The testbench does not include pad drivers, ESD, clocking, equalization, coupling, inductance, or extracted package wiring, so its absolute values should not be generalized to a commercial external-memory interface.
 
 Fifth, link delay and inference latency are different metrics. A 46.38% reduction in one link's propagation delay does not imply a 46.38% network speedup, nor does it conflict with unchanged Timeloop cycles. Any system-level latency claim would require modeling memory-controller scheduling, interface bandwidth, stalls, link serialization, protocol overhead, and the accelerator's critical path. The present evidence supports lower link delay and lower architecture energy, separately.
 
 J3DAI [8] provides a useful practical comparison. It demonstrates a specialized three-wafer CMOS-image-sensor and DNN-accelerator platform. This work does not claim that a generalized model is superior to that fabricated system. Its contribution is complementary: fixed-compute experiments reveal how much one memory-localization mechanism can matter for two workloads, while the link testbench checks the direction of one electrical assumption. CamJ [7] similarly highlights the need for sensor-aware system modeling beyond an accelerator-only boundary.
 
-Several limitations bound the conclusions. Only two AlexNet layers are evaluated; no full network, sensor acquisition chain, NVM, accuracy, area, cost, yield, or thermal field is modeled. The architecture proxy replaces LPDDR4 with SRAM but does not physically simulate TSVs or hybrid bonds. External bandwidth is unconstrained, so architectural timing does not capture memory stalls. CACTI-backed memory values and PTM circuit values are predictive/model-based rather than foundry signoff. The planar capacitance is a deterministic conservative proxy, not a measured value from the proposed system. These limitations do not invalidate the reported calculations, but they prevent claims about fabricated silicon, thermal robustness, or end-to-end speedup.
+Several limitations bound the conclusions. Only AlexNet CONV1 and one AlexNet-derived dense CONV2 configuration are evaluated; no full network, sensor acquisition chain, NVM, accuracy, area, cost, yield, or thermal field is modeled. The architecture proxy replaces LPDDR4 with SRAM but does not physically simulate TSVs or hybrid bonds. External bandwidth is unconstrained, so architectural timing does not capture memory stalls. CACTI-backed memory values and PTM circuit values are predictive/model-based rather than foundry signoff. The planar capacitance is a deterministic conservative proxy, not a measured value from the proposed system. These limitations do not invalidate the reported calculations, but they prevent claims about fabricated silicon, thermal robustness, or end-to-end speedup.
 
 The broader implication is that practical 3D edge AI is a cross-layer co-design problem. Workload tensor behavior determines reuse opportunity; mapping determines activity; memory capacity determines both locality and access cost; interconnect geometry determines electrical loading; and tier/package design determines temperature. The two-level evaluation used here exposes those dependencies while keeping each claim within the modeling level that produced it.
 
 VIII. Conclusion
 
-This paper evaluated a three-tier near-sensor sensor–memory–compute organization with an established, reproducible tool chain. Two AlexNet convolution layers were mapped to the same 168-PE, 45-nm accelerator. Timeloop characterized mapping, activity, cycles, and utilization; Accelergy and CACTI-backed models estimated component energy. Replacing external LPDDR4 with nominal 2-MiB localized SRAM reduced modeled total energy from 7,343.23 to 2,256.65 µJ (69.27%) for CONV1 and from 3,103.78 to 2,261.55 µJ (27.14%) for CONV2. Cycles were unchanged within each workload pair, making workload-dependent energy reduction—not inference speedup—the architecture-level result. A 2–16-MiB sensitivity study showed that the CONV1 reduction decreased from 69.27% to 28.95% as CACTI-characterized SRAM capacity increased.
+This paper evaluated a three-tier near-sensor sensor–memory–compute organization with an established, reproducible tool chain. AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration were mapped to the same 168-PE, 45-nm accelerator. Timeloop characterized mapping, activity, cycles, and utilization; Accelergy and CACTI-backed models estimated component energy. Replacing external LPDDR4 with nominal 2-MiB localized SRAM reduced modeled total energy from 7,343.23 to 2,256.65 µJ (69.27%) for CONV1 and from 3,103.78 to 2,261.55 µJ (27.14%) for dense CONV2. Cycles were unchanged within each workload pair, making workload-dependent energy reduction—not inference speedup—the architecture-level result. A 2–16-MiB sensitivity study showed that the CONV1 reduction decreased from 69.27% to 28.95% as CACTI-characterized SRAM capacity increased.
 
-Complementary ngspice 42 simulation with the exact public 45-nm HP PTM card showed that reducing a representative link load from a 160-fF planar proxy to a literature-backed 40-fF vertical proxy reduced switching energy by 63.77% and mean propagation delay by 46.38%. These are link-level values and are not combined with the Timeloop/Accelergy totals.
+Complementary ngspice 42 simulation with the exact public 45-nm HP PTM card showed that reducing a representative link load from the conservative 160-fF planar-link proxy to the 40-fF TSV reference reduced switching energy by 63.77% and mean propagation delay by 46.38%. These are link-level values and are not combined with the Timeloop/Accelergy totals.
 
 Future work should extend the evaluation to full networks and bandwidth-aware timing, use post-layout parasitic extraction and a physical 3D interconnect implementation, perform package-level thermal simulation, characterize a selected sensor across temperature with labeled data, and ultimately compare against fabricated silicon.
-
-Acknowledgment
-
-The author thanks the anonymous reviewers for comments that motivated the tool-based evaluation, workload-level reporting, and clearer scope boundaries in this revision.
 
 Manuscript tables
 
@@ -330,7 +326,7 @@ TABLE I. Workload characterization
 
 Workload	Input feature map	Output feature map	Kernel	Stride	MACs	Weights	Input activations	Output activations	MACs per combined tensor element	Relative characterization
 AlexNet CONV1	227 × 227 × 3	55 × 55 × 96	11 × 11	4	105,415,200	34,848	154,587	290,400	219.69	Activation/memory-intensive of the pair
-AlexNet CONV2	31 × 31 × 96	27 × 27 × 256	5 × 5	1	447,897,600	614,400	92,256	186,624	501.41	Relatively compute-intensive
+AlexNet-derived dense CONV2 configuration	31 × 31 × 96	27 × 27 × 256	5 × 5	1	447,897,600	614,400	92,256	186,624	501.41	Relatively compute-intensive; dense over all 96 input channels
 
 The indicator is MACs/(weights + input activations + output activations) and is used only to compare these two layers; it is not a bandwidth-aware roofline operational intensity.
 
@@ -353,16 +349,16 @@ Localized highest level	2-MiB CACTI-backed SRAM, 64-bit access width	Controlled 
 
 TABLE III. Timeloop/Accelergy results
 
-Workload	Architecture	Total energy (µJ)	Energy/compute (pJ)	Cycles	Latency at 1 GHz (µs)	Utilization	Highest-level reads	Highest-level writes	External DRAM accesses
+Workload	Architecture	Total energy (µJ)	Energy/compute (pJ)	Cycles	Cycle-derived execution time at 1 GHz (µs)	Utilization	Highest-level reads	Highest-level writes	External DRAM accesses
 CONV1	Planar	7,343.23	69.660	732,050	732.05	0.8571	105,569,787	290,400	105,860,187
 CONV1	Localized	2,256.65	21.407	732,050	732.05	0.8571	105,569,787	290,400	0
-CONV2	Planar	3,103.78	6.930	3,110,400	3,110.40	0.8571	17,338,752	186,624	17,525,376
-CONV2	Localized	2,261.55	5.049	3,110,400	3,110.40	0.8571	17,338,752	186,624	0
+Dense CONV2	Planar	3,103.78	6.930	3,110,400	3,110.40	0.8571	17,338,752	186,624	17,525,376
+Dense CONV2	Localized	2,261.55	5.049	3,110,400	3,110.40	0.8571	17,338,752	186,624	0
 
 TABLE IV. Nominal ngspice link results
 
 Link case	Capacitance	Resistance	Energy/toggle	Rise delay	Fall delay	Mean delay
-Planar bump-load proxy	160 fF	65 mΩ	95.489 fJ	29.693 ps	25.042 ps	27.367 ps
+Conservative planar-link load proxy	160 fF	65 mΩ	95.489 fJ	29.693 ps	25.042 ps	27.367 ps
 Vertical-link proxy	40 fF	65 mΩ	34.598 fJ	14.946 ps	14.405 ps	14.675 ps
 Reduction	75.00% capacitance	—	63.77%	—	—	46.38%
 
@@ -373,7 +369,7 @@ Eyeriss [3]	Yes	No	No	Fabricated accelerator	CNN layers/networks	Row-stationary 
 CamJ [7]	Model validated against reported CIS chips	Supports 2D/3D exploration	Yes	System-level CIS energy modeling	In-sensor visual pipelines	Component-level sensing/compute organization	Power-density exploration
 J3DAI [8]	Yes/specialized hardware platform	Three-wafer	CMOS image sensor	Digital PPA and workload demonstration	Classification and segmentation	Near-memory DNN subsystem	Physical tiering acknowledged
 Shen *et al.* [9]	No	Processor-memory stack	No	Interval thermal simulation	PARSEC, SPLASH-2, and DNN workloads	Unified core/memory power regulation	Quantitative thermal management
-This work	No	Architectural proxy plus link testbench	Conceptual sensor tier	Timeloop/Accelergy/CACTI plus ngspice	Two AlexNet convolution layers	Controlled external-to-local memory substitution and link capacitance	Qualitative design constraints only
+This work	No	Architectural proxy plus link testbench	Conceptual sensor tier	Timeloop/Accelergy/CACTI plus ngspice	AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration	Controlled external-to-local memory substitution and link capacitance	Qualitative design constraints only
 
 Percentages from prior work are not compared because platform, workload, modeling boundary, and reported metric differ.
 

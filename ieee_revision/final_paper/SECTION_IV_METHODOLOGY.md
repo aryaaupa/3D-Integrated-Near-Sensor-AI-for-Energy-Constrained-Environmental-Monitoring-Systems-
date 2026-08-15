@@ -8,13 +8,13 @@ All experiment artifacts are versioned. The architecture evidence is preserved a
 
 ## B. Workload Selection and Characterization
 
-We evaluate exactly two convolution layers from the repository's established AlexNet configuration [14]. Table I gives their tensor dimensions. For batch size one, the MAC count is
+We evaluate exactly two convolution workloads. The first is AlexNet CONV1 [14]. The second workload uses the spatial dimensions of AlexNet CONV2 but is modeled as a dense 5 × 5 convolution over all 96 input channels, consistent with the evaluated Timeloop workload configuration. We therefore call it the **AlexNet-derived dense CONV2 configuration** rather than canonical AlexNet CONV2. Table I gives both tensor definitions. For batch size one, the MAC count is
 
 \[
 N_{\mathrm{MAC}} = P Q K C R S,
 \]
 
-where \(P\) and \(Q\) are output height and width, \(K\) is the output-channel count, \(C\) is the input-channel count, and \(R\) and \(S\) are kernel height and width. This gives 105,415,200 MACs for CONV1 and 447,897,600 for CONV2.
+where \(P\) and \(Q\) are output height and width, \(K\) is the output-channel count, \(C\) is the input-channel count, and \(R\) and \(S\) are kernel height and width. This gives 105,415,200 MACs for AlexNet CONV1 and 447,897,600 for the dense CONV2 configuration.
 
 An architecture-oriented intensity indicator is defined as
 
@@ -22,9 +22,9 @@ An architecture-oriented intensity indicator is defined as
 I_{\mathrm{tensor}} = \frac{N_{\mathrm{MAC}}}{N_W + N_I + N_O},
 \]
 
-where \(N_W\), \(N_I\), and \(N_O\) are weight, input-activation, and output-activation element counts. The resulting values are 219.69 for CONV1 and 501.41 for CONV2. CONV1 is therefore termed activation/memory-intensive relative to CONV2; CONV2 is termed relatively compute-intensive. This indicator does not include cache-line granularity or achieved bandwidth and is not a roofline operational intensity.
+where \(N_W\), \(N_I\), and \(N_O\) are weight, input-activation, and output-activation element counts. The resulting values are 219.69 for AlexNet CONV1 and 501.41 for dense CONV2. CONV1 is therefore termed activation/memory-intensive relative to dense CONV2; dense CONV2 is termed relatively compute-intensive. This indicator does not include cache-line granularity or achieved bandwidth and is not a roofline operational intensity.
 
-With 8-bit weights and inputs and 16-bit outputs, the complete tensor footprints are 770,235 bytes for CONV1 and 1,079,904 bytes for CONV2. The nominal 2-MiB localized SRAM is the smallest tested power-of-two capacity that exceeds both footprints. The experiment is layer-level, not a full-network execution or accuracy evaluation.
+With 8-bit weights and inputs and 16-bit outputs, the complete tensor footprints are 770,235 bytes for CONV1 and 1,079,904 bytes for dense CONV2. The nominal 2-MiB localized SRAM is the smallest tested power-of-two capacity that exceeds both footprints. The experiment is layer-level, not a full-network execution or accuracy evaluation.
 
 [INSERT TABLE I HERE]
 
@@ -72,7 +72,7 @@ This protocol deliberately excludes mapping co-optimization for the localized ca
 
 ## H. Evaluation Metrics
 
-Reported architecture metrics are total energy, energy per Timeloop compute, cycles, utilization, highest-level reads and writes, external-DRAM events, and nominal latency calculated from the documented 1-ns period. For planar-to-localized total-energy reduction,
+Reported architecture metrics are total energy, energy per Timeloop compute, cycles, utilization, highest-level reads and writes, external-DRAM events, and cycle-derived execution time calculated from the documented 1-ns period. For planar-to-localized total-energy reduction,
 
 \[
 \Delta E(w) = 100\frac{E_{\mathrm{planar}}(w)-E_{\mathrm{local}}(w)}{E_{\mathrm{planar}}(w)}.
@@ -88,7 +88,7 @@ For CONV1, localized SRAM capacity is swept over 2, 4, 8, and 16 MiB. The worklo
 
 Circuit simulation uses ngspice 42 from Ubuntu package `42+ds-3build1`, with the version-42 manual [18]. The exact device card is `45nm_HP.pm`, Git blob `160d7da3c5f3a6c0037332df5535dc07d62720ae`, SHA-256 `c9ed2e513523c57a76912a35b2860cb85e4aaa3402b69757d84efa9cc2fb8410`. Its header reads “PTM High Performance 45nm Metal Gate / High-K / Strained-Si” and states nominal \(V_{DD}=1.0\) V. The file declares `level=54`, compact-model `version=4.0`, and `tnom=27`. The exact card is attributed to the University of Minnesota PTM archive [17]; Zhao and Cao [16] are cited for the predictive-model methodology and model family rather than as the byte-level card source.
 
-The testbench contains a CMOS output driver with 4-µm NMOS and 8-µm PMOS widths, a 1-µm/2-µm CMOS receiver, and an identical fanout-of-one load; all channel lengths are 45 nm. The input is a 1-V pulse with 20-ps rise/fall time and 1-ns period. Both nominal cases use 65 mΩ series resistance. The measured 40-fF vertical capacitance and 65-mΩ resistance come from Batra *et al.* [15]. That work reports the 40-fF TSV capacitance as less than one quarter of bump-bond capacitance; the planar proxy is therefore set to exactly 160 fF, a conservative deterministic lower bound, rather than an arbitrary fit.
+The testbench contains a CMOS output driver with 4-µm NMOS and 8-µm PMOS widths, a 1-µm/2-µm CMOS receiver, and an identical fanout-of-one load; all channel lengths are 45 nm. The input is a 1-V pulse with 20-ps rise/fall time and 1-ns period. Both nominal cases use 65 mΩ series resistance. Batra *et al.* report approximately 40 fF for the evaluated TSV structure and state that bump capacitance exceeds four times the TSV capacitance [15]. We therefore use 160 fF as a conservative planar-link load proxy for the controlled circuit comparison; it is not presented as a measured bump capacitance. The 65-mΩ series resistance is also taken from Batra *et al.* [15].
 
 The supply energy for one steady-state 1-ns cycle is
 
@@ -106,7 +106,7 @@ These definitions measure a driver/link/receiver path. They do not measure an LP
 
 ## K. Interconnect-Capacitance Sensitivity
 
-The vertical-link capacitance is swept over 5, 20, 40, and 80 fF while the model card, transistors, input, supply, temperature, resistance, integration window, and measurement thresholds remain unchanged. The sweep spans one eighth to twice the measured nominal 40-fF value. The planar 160-fF proxy is plotted on the same axes for context but is not relabeled as a measured bump capacitance.
+The vertical-link capacitance is swept over 5, 20, 40, and 80 fF while the model card, transistors, input, supply, temperature, resistance, integration window, and measurement thresholds remain unchanged. The sweep spans one eighth to twice the 40-fF TSV reference. The conservative 160-fF planar-link proxy is plotted on the same axes for context and is not labeled as a measured bump capacitance.
 
 ## L. Reproducibility and Traceability
 

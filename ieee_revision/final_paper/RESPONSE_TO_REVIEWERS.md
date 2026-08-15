@@ -18,7 +18,7 @@ We thank the Associate Editor and the reviewers for their detailed comments. The
 
 **Reviewer comment:** The paper lacks explicit workloads, absolute values, and per-workload results.
 
-**Response:** We now evaluate two named AlexNet layers with complete tensor dimensions, strides, element counts, MAC counts, and an explicitly defined architecture-oriented intensity indicator. Absolute modeled energy, energy per compute, cycles, utilization, latency under the stated 1-GHz assumption, highest-level events, and external-DRAM events are reported for both planar and localized configurations. The principal result is workload dependent: total energy decreases by 69.27% for CONV1 and 27.14% for CONV2, while cycles and utilization remain unchanged.
+**Response:** We now evaluate AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration with complete tensor dimensions, strides, element counts, MAC counts, and an explicitly defined architecture-oriented intensity indicator. The manuscript states that dense CONV2 uses the spatial dimensions of AlexNet CONV2 but connects each 5 × 5 filter to all 96 input channels rather than using canonical grouped connectivity. Absolute modeled energy, energy per compute, cycles, utilization, cycle-derived execution time under the stated 1-GHz assumption, highest-level events, and external-DRAM events are reported for both planar and localized configurations. The principal result is workload dependent: total energy decreases by 69.27% for CONV1 and 27.14% for dense CONV2, while cycles and utilization remain unchanged.
 
 **Location:** Sections I, IV-B, IV-H, V-A–V-C; Figs. 4–5; Tables I and III.
 
@@ -68,7 +68,7 @@ We thank the Associate Editor and the reviewers for their detailed comments. The
 
 **Reviewer comment:** Concrete evaluated workloads and model details are needed.
 
-**Response:** The revision specifies AlexNet CONV1 and CONV2, including input/output tensors, kernel, stride, MACs, tensor volumes, bit widths, array size, RF capacities, global SRAM, highest-level memories, technology, clock, and fixed-mapping procedure. It also records the simulator and model identifiers for the circuit study.
+**Response:** The revision specifies AlexNet CONV1 and an AlexNet-derived dense CONV2 configuration, including input/output tensors, kernel, stride, connectivity, MACs, tensor volumes, bit widths, array size, RF capacities, global SRAM, highest-level memories, technology, clock, and fixed-mapping procedure. It also records the simulator and model identifiers for the circuit study.
 
 **Location:** Sections IV-B–IV-G and IV-J; Tables I, II, and IV.
 
@@ -76,7 +76,7 @@ We thank the Associate Editor and the reviewers for their detailed comments. The
 
 **Reviewer comment:** Please characterize workload arithmetic intensity or memory sensitivity.
 
-**Response:** We define an architecture-oriented indicator, MACs divided by the combined weight/input/output tensor-element count. It is 219.69 for CONV1 and 501.41 for CONV2. We explicitly state that this is not a roofline operational intensity because it does not represent achieved bytes transferred. The indicator and component energies explain why the localization benefit differs between the two layers.
+**Response:** We define an architecture-oriented indicator, MACs divided by the combined weight/input/output tensor-element count. It is 219.69 for AlexNet CONV1 and 501.41 for dense CONV2. We explicitly state that this is not a roofline operational intensity because it does not represent achieved bytes transferred. The indicator and component energies explain why the localization benefit differs between the two workload configurations.
 
 **Location:** Sections I, IV-B, and V-B; Table I.
 

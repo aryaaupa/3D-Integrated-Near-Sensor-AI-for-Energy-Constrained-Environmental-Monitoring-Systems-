@@ -2,7 +2,7 @@
 
 ## Manuscript completeness
 
-- [x] Title, author line, affiliation, abstract, index terms, Sections I–VIII, acknowledgment, and one bibliography are present.
+- [x] Title, author line, affiliation, abstract, index terms, Sections I–VIII, and one bibliography are present; no acknowledgment section is included because no institutional or funding acknowledgment was supplied.
 - [x] Abstract is 217 words, within the requested approximately 180–230-word range.
 - [x] `COPY_PASTE_MANUSCRIPT.txt` is plain text with numbered citations, explicit figure/table insertion markers, captions, and no Markdown headings.
 - [x] Tables I–V are present and use only evidence-backed or qualitative fields.
@@ -13,7 +13,8 @@
 - [x] Architecture results originate from passing Timeloop/Accelergy runs at commit `4291da55dc45f433f6836ec0b39e96b04ccc2068`.
 - [x] Circuit results originate from passing ngspice runs at commit `9dfd8e40ac959f1a66d024014859a340a15df101`.
 - [x] Planar/localized pairs use identical workloads, mappings, compute array, precision, lower hierarchy, technology, and clock.
-- [x] CONV1 and CONV2 MAC counts match within each architecture pair.
+- [x] AlexNet CONV1 and dense CONV2 MAC counts match within each architecture pair.
+- [x] Dense CONV2 is explicitly distinguished from canonical grouped AlexNet CONV2; the evaluated configuration connects every 5 × 5 filter to all 96 input channels.
 - [x] All reported energy values are nonnegative; all reported utilization values lie in [0,1].
 - [x] Highest-level event count (unchanged) is distinguished from external-DRAM interface events (zero in localized inputs).
 - [x] Timeloop cycles are reported as unchanged; no architectural speedup is claimed.

@@ -151,7 +151,7 @@ def figure4():
     local = [float(next(r["total_energy_uJ"] for r in data if r["workload"] == w and r["architecture"] == "Localized")) for w in workloads]
     ax.bar([v - width / 2 for v in x], planar, width, label="Planar", color=ORANGE)
     ax.bar([v + width / 2 for v in x], local, width, label="Localized", color=BLUE)
-    ax.set_xticks(x, workloads)
+    ax.set_xticks(x, ["AlexNet\nCONV1", "Dense\nCONV2"])
     ax.set_ylabel("Total energy (µJ)")
     ax.set_ylim(0, 8000)
     ax.grid(axis="y", alpha=0.25)
@@ -173,7 +173,7 @@ def figure5():
     local = [float(next(r["energy_per_compute_pJ"] for r in data if r["workload"] == w and r["architecture"] == "Localized")) for w in workloads]
     ax.bar([v - width / 2 for v in x], planar, width, label="Planar", color=ORANGE)
     ax.bar([v + width / 2 for v in x], local, width, label="Localized", color=BLUE)
-    ax.set_xticks(x, workloads)
+    ax.set_xticks(x, ["AlexNet\nCONV1", "Dense\nCONV2"])
     ax.set_ylabel("Energy per compute (pJ)")
     ax.set_ylim(0, 76)
     ax.grid(axis="y", alpha=0.25)

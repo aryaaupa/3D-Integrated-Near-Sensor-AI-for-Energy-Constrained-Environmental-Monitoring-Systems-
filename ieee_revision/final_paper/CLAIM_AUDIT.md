@@ -9,13 +9,13 @@ Abbreviations: `A-results` = `ieee_revision/experiments/processed/results.csv`; 
 | Claim | Section(s) | Value | Raw source / line-file-output | Calculation | Verified? |
 |---|---|---:|---|---|---|
 | CONV1 dimensions | I, IV-B, Table I | input 227×227×3; output 55×55×96; kernel 11×11; stride 4 | `experiments/workloads/alexnet_conv1_activation_intensive.yaml`; paired raw `input.yaml` problem block | Direct fields | Yes |
-| CONV2 dimensions | I, IV-B, Table I | input 31×31×96; output 27×27×256; kernel 5×5; stride 1 | `experiments/workloads/alexnet_conv2_compute_intensive.yaml`; paired raw `input.yaml` problem block | Direct fields | Yes |
+| AlexNet-derived dense CONV2 dimensions and connectivity | I, IV-B, Table I | input 31×31×96; output 27×27×256; kernel 5×5×96; stride 1; dense over all 96 input channels | `experiments/workloads/alexnet_conv2_compute_intensive.yaml`; paired raw `input.yaml` problem block | Direct fields; workload `C=96` applies to every filter | Yes |
 | CONV1 MACs | IV-B, V-B, Table I | 105,415,200 | A-results `total_MACs`; all CONV1 raw `timeloop-model.stats.txt`, `Computes` | 55×55×96×3×11×11 | Yes |
-| CONV2 MACs | IV-B, V-B, Table I | 447,897,600 | A-results `total_MACs`; all CONV2 raw stats, `Computes` | 27×27×256×96×5×5 | Yes |
+| Dense CONV2 MACs | IV-B, V-B, Table I | 447,897,600 | A-results `total_MACs`; all dense-CONV2 raw stats, `Computes` | 27×27×256×96×5×5 | Yes |
 | CONV1 tensor volumes | IV-B, Table I | weights 34,848; input 154,587; output 290,400 | Workload YAML dimensions | 11×11×3×96; 227×227×3; 55×55×96 | Yes |
-| CONV2 tensor volumes | IV-B, Table I | weights 614,400; input 92,256; output 186,624 | Workload YAML dimensions | 5×5×96×256; 31×31×96; 27×27×256 | Yes |
-| Tensor-intensity indicators | I, IV-B, V-B, Table I | CONV1 219.69; CONV2 501.41 MAC/combined element | Workload summary CSV and YAML dimensions | MACs/(weights+input+output) | Yes |
-| Complete tensor footprints | IV-B | CONV1 770,235 B; CONV2 1,079,904 B | Workload summary fields plus declared precisions | weights+inputs at 1 B; outputs at 2 B | Yes |
+| Dense CONV2 tensor volumes | IV-B, Table I | weights 614,400; input 92,256; output 186,624 | Workload YAML dimensions | 5×5×96×256; 31×31×96; 27×27×256 | Yes |
+| Tensor-intensity indicators | I, IV-B, V-B, Table I | CONV1 219.69; dense CONV2 501.41 MAC/combined element | Workload summary CSV and YAML dimensions | MACs/(weights+input+output) | Yes |
+| Complete tensor footprints | IV-B | CONV1 770,235 B; dense CONV2 1,079,904 B | Workload summary fields plus declared precisions | weights+inputs at 1 B; outputs at 2 B | Yes |
 | Compute array | Abstract, IV-C, Table II, VIII | 14×12 = 168 PEs | Paired raw `input.yaml`, compute mesh attributes; architecture validator | 14×12 | Yes |
 | Precision and MAC | IV-C, Table II | 8-bit inputs/weights; 16-bit psums/output; 8-bit multiplier + 16-bit adder | Paired raw `input.yaml`, component attributes | Direct fields | Yes |
 | Per-PE RF capacities | IV-C, Table II | input 12; weight 192; psum 16 entries | Paired raw `input.yaml`, storage attributes | Direct fields | Yes |
@@ -30,19 +30,19 @@ Abbreviations: `A-results` = `ieee_revision/experiments/processed/results.csv`; 
 | Claim | Section(s) | Value | Raw source / line-file-output | Calculation | Verified? |
 |---|---|---:|---|---|---|
 | CONV1 total energy | Abstract, I, V-A, Table III, VIII | planar 7,343.23 µJ; local 2,256.65 µJ | A-results `total_energy_pJ`; respective raw stats `Summary Stats/Energy (uJ)` | pJ/10^6 | Yes |
-| CONV2 total energy | Abstract, I, V-A, Table III, VIII | planar 3,103.78 µJ; local 2,261.55 µJ | A-results and respective raw stats `Summary Stats/Energy (uJ)` | pJ/10^6 | Yes |
-| Total-energy reductions | Abstract, I, V-A, V-B, V-D, VII, VIII | CONV1 69.27%; CONV2 27.14% | A-compare `total_energy_reduction_percent` | 100×(planar−local)/planar | Yes |
-| Energy per compute | Abstract, V-A, Table III | CONV1 69.660→21.407 pJ; CONV2 6.930→5.049 pJ | A-results `energy_per_compute_pJ`; raw stats `Total fJ/Compute` | fJ/1000 | Yes |
-| Energy/compute reductions | Abstract, V-A | CONV1 69.27%; CONV2 27.14% | A-compare `energy_per_compute_reduction_percent` | 100×(planar−local)/planar | Yes |
-| Cycles | Abstract, I, V-A, Table III, VIII | CONV1 732,050; CONV2 3,110,400; identical by pair | A-results `cycles`; raw stats `Summary Stats/Cycles` | Direct parse | Yes |
-| Nominal cycle-derived latency | V-A, Table III | CONV1 732.05 µs; CONV2 3,110.40 µs | A-trace `latency_us`; raw stats and `input.yaml` | cycles×1 ns/1000 ns/µs | Yes |
+| Dense CONV2 total energy | Abstract, I, V-A, Table III, VIII | planar 3,103.78 µJ; local 2,261.55 µJ | A-results and respective raw stats `Summary Stats/Energy (uJ)` | pJ/10^6 | Yes |
+| Total-energy reductions | Abstract, I, V-A, V-B, V-D, VII, VIII | CONV1 69.27%; dense CONV2 27.14% | A-compare `total_energy_reduction_percent` | 100×(planar−local)/planar | Yes |
+| Energy per compute | Abstract, V-A, Table III | CONV1 69.660→21.407 pJ; dense CONV2 6.930→5.049 pJ | A-results `energy_per_compute_pJ`; raw stats `Total fJ/Compute` | fJ/1000 | Yes |
+| Energy/compute reductions | Abstract, V-A | CONV1 69.27%; dense CONV2 27.14% | A-compare `energy_per_compute_reduction_percent` | 100×(planar−local)/planar | Yes |
+| Cycles | Abstract, I, V-A, Table III, VIII | CONV1 732,050; dense CONV2 3,110,400; identical by pair | A-results `cycles`; raw stats `Summary Stats/Cycles` | Direct parse | Yes |
+| Nominal cycle-derived execution time | V-A, Table III | CONV1 732.05 µs; dense CONV2 3,110.40 µs | A-trace raw field `latency_us`; raw stats and `input.yaml` | cycles×1 ns/1000 ns/µs | Yes |
 | Utilization | I, V-A, Table III | 0.8571 in all four runs | A-results `utilization`; raw stats utilization percent | percent/100 | Yes |
 | CONV1 component energy | V-B | highest 6,775.052→1,688.475 µJ; lower buffers 526.162 µJ; compute 42.013 µJ | A-results corresponding energy columns; A-trace maps to raw stats | pJ/10^6 and round to 0.001 µJ | Yes |
-| CONV2 component energy | V-B | highest 1,121.624→279.387 µJ; lower buffers 1,803.648 µJ; compute 178.510 µJ | A-results corresponding energy columns; A-trace maps to raw stats | pJ/10^6 and round to 0.001 µJ | Yes |
+| Dense CONV2 component energy | V-B | highest 1,121.624→279.387 µJ; lower buffers 1,803.648 µJ; compute 178.510 µJ | A-results corresponding energy columns; A-trace maps to raw stats | pJ/10^6 and round to 0.001 µJ | Yes |
 | CONV1 highest-level events | V-C, Table III | 105,569,787 reads; 290,400 writes; unchanged by pair | A-results; raw stats scalar reads and fills+updates | Sum across dataspaces | Yes |
-| CONV2 highest-level events | V-C, Table III | 17,338,752 reads; 186,624 writes; unchanged by pair | A-results; raw stats scalar reads and fills+updates | Sum across dataspaces | Yes |
+| Dense CONV2 highest-level events | V-C, Table III | 17,338,752 reads; 186,624 writes; unchanged by pair | A-results; raw stats scalar reads and fills+updates | Sum across dataspaces | Yes |
 | Highest-level event-count reduction | II-B, V-C | 0% | A-compare | 100×(planar events−local events)/planar events | Yes |
-| Planar external-DRAM totals | V-C, Table III | CONV1 105,860,187; CONV2 17,525,376 | A-results external read/write columns | reads+writes | Yes |
+| Planar external-DRAM totals | V-C, Table III | CONV1 105,860,187; dense CONV2 17,525,376 | A-results external read/write columns | reads+writes | Yes |
 | Local external-DRAM totals and reduction | V-C, Table III | 0 events; 100% reduction at external interface | Localized `input.yaml` contains no DRAM; A-results zeros; A-compare | 100×(planar−0)/planar | Yes |
 | CONV1 capacity sweep | Abstract, IV-I, V-D, VIII | 2/4/8/16 MiB | Sensitivity input YAMLs and A-sens `localized_memory_capacity_MiB` | Direct fields | Yes |
 | CONV1 sweep energies | V-D | 2,256.65/3,066.11/3,941.87/5,217.29 µJ | A-sens and sensitivity raw stats `Energy (uJ)` | Direct parse | Yes |
@@ -58,7 +58,7 @@ Abbreviations: `A-results` = `ieee_revision/experiments/processed/results.csv`; 
 | Device model electrical metadata | IV-J | VDD 1.0 V; BSIM4 level 54/version 4.0; tnom 27 °C | `45nm_HP.pm` header and model declarations; instantiated netlists | Direct fields | Yes |
 | Driver/receiver dimensions | IV-J | driver NMOS/PMOS 4/8 µm; receiver 1/2 µm; all L=45 nm | Nominal netlists | Direct instance parameters | Yes |
 | Input stimulus | IV-J | 1 V; 20-ps rise/fall; 1-ns period | Nominal netlists, pulse source | Direct parameters | Yes |
-| Nominal link proxies | Abstract, I, IV-J, Table IV, VIII | vertical 40 fF; planar 160 fF; both 65 mΩ | Run manifest and nominal netlists | Direct parameter; 160 fF = 4×40 fF | Yes |
+| Nominal link proxies | Abstract, I, IV-J, Table IV, VIII | TSV reference 40 fF; conservative planar-link proxy 160 fF; both 65 mΩ | Run manifest and nominal netlists; Batra *et al.* [15] for the reported capacitance relationship | 160 fF is a deterministic 4×40-fF proxy and is not asserted as a measured bump capacitance | Yes |
 | Integration window and toggle normalization | IV-J | 1.05–2.05 ns; two transitions/cycle; divide by 2 | Nominal and sensitivity netlists, `.measure` expressions | Direct expressions | Yes |
 | Nominal switching energy | Abstract, V-E, Table IV, VIII | planar 95.489; vertical 34.598 fJ/toggle | S-results and S-trace; nominal `ngspice_stdout_stderr.txt` `.measure` output | |integral| and unit conversion, then /2 | Yes |
 | Switching-energy reduction | Abstract, I, V-E, Table IV, VIII | 63.77% | SPICE processed comparison | 100×(95.489−34.59825)/95.489 | Yes |
