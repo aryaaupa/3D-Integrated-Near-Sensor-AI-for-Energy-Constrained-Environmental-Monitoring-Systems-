@@ -231,7 +231,9 @@ Table III and Fig. 4 report absolute layer energy. For AlexNet CONV1, the planar
 
 [INSERT FIG. 4 HERE]
 
-Caption: Fig. 4. Timeloop/Accelergy total energy for the planar and localized-memory configurations. Values are absolute layer energies; mappings and compute resources are fixed.
+The extended evaluation adds CONV3 and AlexNet-derived dense CONV4 and CONV5 configurations under the same controlled protocol. Their planar-to-localized energies are 732.91 to 671.67 µJ (8.36%), 2,364.95 to 1,528.64 µJ (35.36%), and 1,570.14 to 993.78 µJ (36.71%), respectively. Across the five points, the localization benefit varies substantially and is not explained by the architecture-oriented intensity indicator alone.
+
+Caption: Fig. 4. Timeloop/Accelergy total energy across the five evaluated convolution configurations. Each planar/localized pair uses identical workload dimensions, mapping, precision, lower memory hierarchy, 168-PE compute array, and clock assumption; only the highest-level memory component changes from external LPDDR4 to the evaluated 2-MiB localized SRAM. Pair annotations report the deterministic planar-to-localized total-energy reduction. Timeloop cycle count and utilization are unchanged within every pair. CONV2, CONV4, and CONV5 denote the AlexNet-derived dense configurations evaluated by the committed Timeloop workloads, not canonical grouped AlexNet layers.
 
 [INSERT FIG. 5 HERE]
 

@@ -231,24 +231,39 @@ def figure3():
 
 def figure4():
     data = rows("architecture_results.csv")
-    fig, ax = plt.subplots(figsize=(3.5, 2.65))
-    workloads = ["CONV1", "CONV2"]
-    x = [0, 1]
-    width = 0.34
+    fig, ax = plt.subplots(figsize=(7.0, 2.65))
+    workloads = ["CONV1", "CONV2", "CONV3", "CONV4_DENSE", "CONV5_DENSE"]
+    labels = ["CONV1", "Dense CONV2", "CONV3", "Dense CONV4", "Dense CONV5"]
+    x = list(range(len(workloads)))
+    width = 0.31
     planar = [float(next(r["total_energy_uJ"] for r in data if r["workload"] == w and r["architecture"] == "Planar")) for w in workloads]
     local = [float(next(r["total_energy_uJ"] for r in data if r["workload"] == w and r["architecture"] == "Localized")) for w in workloads]
-    ax.bar([v - width / 2 for v in x], planar, width, label="Planar", color=ORANGE)
-    ax.bar([v + width / 2 for v in x], local, width, label="Localized", color=BLUE)
-    ax.set_xticks(x, ["AlexNet\nCONV1", "Dense\nCONV2"])
+    reductions = [(p - q) / p * 100 for p, q in zip(planar, local)]
+    ax.bar([v - width / 2 for v in x], planar, width, label="Planar",
+           color="#D7A06B", edgecolor=DARK, linewidth=0.45)
+    ax.bar([v + width / 2 for v in x], local, width, label="Localized",
+           color="#6F9DBD", edgecolor=DARK, linewidth=0.45)
+    ax.set_xticks(x, labels)
     ax.set_ylabel("Total energy (µJ)")
-    ax.set_ylim(0, 8000)
-    ax.grid(axis="y", alpha=0.25)
-    ax.legend(frameon=False)
-    ax.set_title("Workload-dependent total energy", fontweight="bold")
-    for i, (p, q) in enumerate(zip(planar, local)):
-        ax.text(i - width / 2, p + 120, f"{p:,.0f}", ha="center", va="bottom", fontsize=6.5)
-        ax.text(i + width / 2, q + 120, f"{q:,.0f}", ha="center", va="bottom", fontsize=6.5)
-    save(fig, "fig4_total_energy")
+    ax.set_ylim(0, 8500)
+    ax.set_xlim(-0.55, len(x) - 0.45)
+    ax.grid(axis="y", color="#D9DDE0", linewidth=0.45)
+    ax.set_axisbelow(True)
+    ax.legend(frameon=False, ncol=2, loc="upper right", handlelength=1.4,
+              columnspacing=1.0, borderaxespad=0.25)
+    for spine in ax.spines.values():
+        spine.set_color(DARK)
+        spine.set_linewidth(0.65)
+    for i, (p, q, reduction) in enumerate(zip(planar, local, reductions)):
+        top = max(p, q)
+        bracket_y = top + 170
+        ax.plot([i - width / 2, i - width / 2, i + width / 2, i + width / 2],
+                [bracket_y - 65, bracket_y, bracket_y, bracket_y - 65],
+                color=DARK, linewidth=0.55, clip_on=False)
+        ax.text(i, bracket_y + 55, f"−{reduction:.1f}%", ha="center", va="bottom",
+                fontsize=6.5, fontweight="bold", color=DARK)
+    fig.subplots_adjust(left=0.085, right=0.995, bottom=0.20, top=0.97)
+    save_ieee(fig, "fig4_total_energy")
 
 
 def figure5():

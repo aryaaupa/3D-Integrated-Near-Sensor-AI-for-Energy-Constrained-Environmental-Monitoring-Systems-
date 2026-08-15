@@ -1,0 +1,5 @@
+# Figure 4 caption and insertion guidance
+
+**Caption:** Fig. 4. Timeloop/Accelergy total energy across the five evaluated convolution configurations. Each planar/localized pair uses identical workload dimensions, mapping, precision, lower memory hierarchy, 168-PE compute array, and clock assumption; only the highest-level memory component changes from external LPDDR4 to the evaluated 2-MiB localized SRAM. Pair annotations report the deterministic planar-to-localized total-energy reduction. Timeloop cycle count and utilization are unchanged within every pair. CONV2, CONV4, and CONV5 denote the AlexNet-derived dense configurations evaluated by the committed Timeloop workloads, not canonical grouped AlexNet layers.
+
+**Insertion:** Replace the current two-workload Fig. 4 in the architecture-level results subsection with this five-workload figure. It supports the absolute planar-versus-localized energy comparisons and the conclusion that localization benefit varies materially across the evaluated workloads. It does not support a cycle, utilization, inference-latency, bandwidth, or universal workload-intensity claim.
