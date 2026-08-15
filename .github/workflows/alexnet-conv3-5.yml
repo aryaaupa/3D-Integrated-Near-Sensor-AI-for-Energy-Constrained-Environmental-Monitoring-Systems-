@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 240
     container:
-      image: timeloopaccelergy/accelergy-timeloop-infrastructure:latest-amd64
+      image: timeloopaccelergy/accelergy-timeloop-infrastructure@sha256:d50887ff167f534f7a3e5eeca3d28a66b35f3f9705cf3f82443527db850492bc
     env:
       ACCELERGY_CONFIG_SOURCE: /github/home/.config/accelergy/accelergy_config.yaml
       MPLCONFIGDIR: /tmp/matplotlib
@@ -34,6 +34,8 @@ jobs:
           mkdir -p ieee_revision/experiments/logs
           {
             date -u +RUN_UTC=%Y-%m-%dT%H:%M:%SZ
+            echo CONTAINER_IMAGE=timeloopaccelergy/accelergy-timeloop-infrastructure:latest-amd64
+            echo CONTAINER_DIGEST=sha256:d50887ff167f534f7a3e5eeca3d28a66b35f3f9705cf3f82443527db850492bc
             command -v accelergy
             command -v timeloop-model
             command -v timeloop-mapper
@@ -80,7 +82,12 @@ jobs:
         run: |
           set -euo pipefail
           grep -q 'WORKLOAD_EXTENSION_VALIDATION=PASS' ieee_revision/experiments/processed/workload_extension_validation.txt
-          test "$(find ieee_revision/experiments/raw_outputs -path '*/alexnet_conv[345]*/*/completed.marker' -type f | wc -l)" -eq 9
+          for workload in alexnet_conv3 alexnet_conv4_dense alexnet_conv5_dense; do
+            test -s "ieee_revision/experiments/raw_outputs/mapping_search/$workload/completed.marker"
+            for architecture in planar integrated_3d; do
+              test -s "ieee_revision/experiments/raw_outputs/$workload/$architecture/completed.marker"
+            done
+          done
           test -s ieee_revision/experiments/figures/workload_dependence.pdf
           test -s ieee_revision/experiments/figures/workload_dependence.svg
           test -s ieee_revision/experiments/figures/workload_dependence.png
