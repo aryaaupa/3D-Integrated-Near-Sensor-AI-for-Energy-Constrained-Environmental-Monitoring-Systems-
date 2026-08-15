@@ -45,10 +45,10 @@ Evidence priority used throughout: committed raw simulator output > deterministi
 | Nominal link resistance | IV-J; Table IV | 65 mOhm | run manifest | input netlists | Direct | PASS |
 | Vertical energy/toggle | Abstract; V-F; Table IV | 34.598 fJ | `link_results.csv` | raw ngspice integral | abs(Q)V/2 | PASS |
 | Planar energy/toggle | Abstract; V-F; Table IV | 95.489 fJ | `link_results.csv` | raw ngspice integral | abs(Q)V/2 | PASS |
-| Link energy reduction | Abstract; V-F; Table IV | 63.77% | `link_comparison.csv` | two raw outputs | 100(Ep-Ev)/Ep | PASS |
+| Representative 160-fF planar-link proxy versus literature-referenced 40-fF TSV case: energy reduction | Abstract; V-F; Table IV | 63.77% | `link_comparison.csv` | two raw outputs | 100(Ep-Ev)/Ep | PASS |
 | Vertical rise/fall/mean delay | V-G; Table IV | 14.946/14.405/14.675 ps | `link_results.csv` | raw `.measure` output | mean=(rise+fall)/2 | PASS |
 | Planar rise/fall/mean delay | V-G; Table IV | 29.693/25.042/27.367 ps | `link_results.csv` | raw `.measure` output | mean=(rise+fall)/2 | PASS |
-| Link mean-delay reduction | Abstract; V-G; Table IV | 46.38% | `link_comparison.csv` | two raw outputs | 100(Dp-Dv)/Dp | PASS |
+| Representative 160-fF planar-link proxy versus literature-referenced 40-fF TSV case: mean-delay reduction | Abstract; V-G; Table IV | 46.38% | `link_comparison.csv` | two raw outputs | 100(Dp-Dv)/Dp | PASS |
 | Link energy sweep | V-F; S11 | 17.008-95.489 fJ | `link_results.csv` | five raw outputs | Parsed | PASS |
 | Link delay sweep | V-G; S11 | 9.692-27.367 ps | `link_results.csv` | five raw outputs | Parsed | PASS |
 | No separate architecture network energy | IV-G; VII-D | NA, not zero | `results.csv`; traceability | raw stats inspection | Direct absence | PASS |

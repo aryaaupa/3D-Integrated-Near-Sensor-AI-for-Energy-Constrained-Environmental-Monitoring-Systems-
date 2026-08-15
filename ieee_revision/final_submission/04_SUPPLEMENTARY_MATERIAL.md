@@ -49,10 +49,10 @@ Highest-level logical action counts are identical within each planar/localized p
 | Workload | Highest reads | Highest writes | Planar external-DRAM actions | Localized external-DRAM actions |
 |---|---:|---:|---:|---:|
 | AlexNet CONV1 | 105,569,787 | 290,400 | 105,860,187 | 0 |
-| Dense CONV2 | 17,338,752 | 186,624 | 17,525,376 | 0 |
+| AlexNet-derived dense CONV2 | 17,338,752 | 186,624 | 17,525,376 | 0 |
 | AlexNet CONV3 | 1,072,128 | 194,688 | 1,266,816 | 0 |
-| Dense CONV4 | 17,338,752 | 64,896 | 17,403,648 | 0 |
-| Dense CONV5 | 11,950,848 | 43,264 | 11,994,112 | 0 |
+| AlexNet-derived dense CONV4 | 17,338,752 | 64,896 | 17,403,648 | 0 |
+| AlexNet-derived dense CONV5 | 11,950,848 | 43,264 | 11,994,112 | 0 |
 
 ## S5. Component energy breakdown
 
@@ -60,30 +60,26 @@ Highest-level logical action counts are identical within each planar/localized p
 |---|---|---:|---:|---:|---:|
 | AlexNet CONV1 | Planar | 6,775.052 | 526.162 | 42.013 | 7,343.23 |
 | AlexNet CONV1 | Localized | 1,688.475 | 526.162 | 42.013 | 2,256.65 |
-| Dense CONV2 | Planar | 1,121.624 | 1,803.648 | 178.510 | 3,103.78 |
-| Dense CONV2 | Localized | 279.387 | 1,803.648 | 178.510 | 2,261.55 |
+| AlexNet-derived dense CONV2 | Planar | 1,121.624 | 1,803.648 | 178.510 | 3,103.78 |
+| AlexNet-derived dense CONV2 | Localized | 279.387 | 1,803.648 | 178.510 | 2,261.55 |
 | AlexNet CONV3 | Planar | 81.076 | 592.242 | 59.591 | 732.91 |
 | AlexNet CONV3 | Localized | 19.832 | 592.242 | 59.591 | 671.67 |
-| Dense CONV4 | Planar | 1,113.833 | 1,161.729 | 89.387 | 2,364.95 |
-| Dense CONV4 | Localized | 277.519 | 1,161.729 | 89.387 | 1,528.64 |
-| Dense CONV5 | Planar | 767.623 | 742.926 | 59.591 | 1,570.14 |
-| Dense CONV5 | Localized | 191.260 | 742.926 | 59.591 | 993.78 |
+| AlexNet-derived dense CONV4 | Planar | 1,113.833 | 1,161.729 | 89.387 | 2,364.95 |
+| AlexNet-derived dense CONV4 | Localized | 277.519 | 1,161.729 | 89.387 | 1,528.64 |
+| AlexNet-derived dense CONV5 | Planar | 767.623 | 742.926 | 59.591 | 1,570.14 |
+| AlexNet-derived dense CONV5 | Localized | 191.260 | 742.926 | 59.591 | 993.78 |
 
-The planar highest-memory share is 92.26%, 36.14%, 11.06%, 47.10%, and 48.89% for CONV1 through dense CONV5. This component share, not the tensor-intensity scalar, explains the overall reduction in the controlled substitution.
-
-![Fig. S3](figures/supplementary/figS3_component_energy.png)
-
-**Fig. S3.** Component-energy breakdown. Lower-buffer and compute energy are unchanged within each pair; the highest-level component produces the observed total-energy difference.
+The planar highest-memory share is 92.26%, 36.14%, 11.06%, 47.10%, and 48.89% for AlexNet CONV1 through AlexNet-derived dense CONV5. Within these five evaluated mappings, this exposed component share closely tracks the observed benefit more clearly than the tensor-intensity scalar. The component-energy visualization is promoted to main-text Fig. 5 because it supplies the primary evidence for this mechanism.
 
 ## S6. Energy-per-compute results
 
 | Workload | Planar (pJ/compute) | Localized (pJ/compute) | Reduction |
 |---|---:|---:|---:|
 | AlexNet CONV1 | 69.660 | 21.407 | 69.27% |
-| Dense CONV2 | 6.930 | 5.049 | 27.14% |
+| AlexNet-derived dense CONV2 | 6.930 | 5.049 | 27.14% |
 | AlexNet CONV3 | 4.902 | 4.492 | 8.36% |
-| Dense CONV4 | 10.545 | 6.816 | 35.36% |
-| Dense CONV5 | 10.501 | 6.646 | 36.71% |
+| AlexNet-derived dense CONV4 | 10.545 | 6.816 | 35.36% |
+| AlexNet-derived dense CONV5 | 10.501 | 6.646 | 36.71% |
 
 ![Fig. S2](figures/supplementary/figS2_energy_per_compute.png)
 
@@ -135,10 +131,10 @@ The steady-state supply-charge integral is evaluated from 1.05 ns to 2.05 ns. En
 
 Architecture metric-to-file mappings are preserved in `ieee_revision/experiments/processed/traceability.csv`. Circuit metric-to-file mappings are preserved in `ieee_revision/spice_validation/processed/traceability.csv`. The circuit checksum file includes every netlist, raw output, waveform, processed CSV, script, figure, and model copy. The final submission evidence manifest records the authoritative branch, commit, and path for every source class.
 
-## S13. Claim-evidence boundary and workload-intensity figure
+## S13. Claim-evidence boundary and descriptive mechanism comparison
 
-![Fig. S1](figures/supplementary/figS1_intensity_vs_reduction.png)
+![Fig. S1](figures/supplementary/figS1_mechanism_comparison.png)
 
-**Fig. S1.** Tensor-intensity indicator versus planar-to-localized energy reduction. Points are shown individually; no regression or trend line is fitted. Similar indicator values for CONV3, dense CONV4, and dense CONV5 produce reductions from 8.36% to 36.71%, so no universal intensity-energy relationship is inferred.
+**Fig. S1.** Descriptive comparison of planar-to-localized total-energy reduction against (a) the planar highest-memory energy fraction and (b) the tensor-intensity indicator for the five evaluated workloads. All points are labeled, and no regression or trend line is fitted. Panel (a) shows that the exposed highest-memory fraction closely tracks the observed benefit within this controlled set; panel (b) shows that similar tensor-intensity values can yield substantially different reductions. No statistical or workload-universal relationship is inferred from five samples.
 
-The architecture model supports energy, action, cycle, and utilization claims only. The ngspice model supports representative-path energy and delay only. Neither supports sensing accuracy, thermal fields, complete physical implementation, or fabricated-silicon performance. No temperature-labeled sensing dataset, sensor transfer function, prediction set, ground truth, or accuracy metric exists; consequently no sensing-accuracy-versus-temperature curve is generated.
+The architecture model supports energy, action, cycle, and utilization claims only. It evaluates an LPDDR4-to-SRAM substitution and does not physically model a 3D stack. The ngspice model supports representative-path energy and delay only; the 63.77% and 46.38% nominal reductions compare the conservative 160-fF planar-link proxy with the literature-referenced 40-fF TSV case and are not generic hardware improvements. Neither path supports sensing accuracy, thermal fields, complete physical implementation, or fabricated-silicon performance. No temperature-labeled sensing dataset, sensor transfer function, prediction set, ground truth, or accuracy metric exists; consequently no sensing-accuracy-versus-temperature curve is generated.

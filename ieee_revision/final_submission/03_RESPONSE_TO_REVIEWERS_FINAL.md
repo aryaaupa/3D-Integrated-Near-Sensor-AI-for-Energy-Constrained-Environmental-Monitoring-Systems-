@@ -1,10 +1,10 @@
 # Response to Reviewers
 
-**Manuscript:** “3D-Integrated Near-Sensor AI for Energy-Constrained Environmental Monitoring Systems”
+**Manuscript:** “Controlled Memory Localization for a Proposed 3D-Integrated Near-Sensor AI Organization”
 
 We thank the Associate Editor and reviewers for the detailed technical guidance. The revised manuscript has been reconstructed around new, reproducible evidence rather than the previous analytical-only narrative. The architecture study now contains ten successful Timeloop/Accelergy model runs: planar and localized configurations for five convolution workloads. The study preserves the same compute array, precision, lower memory hierarchy, clock assumption, and per-workload mapping within each pair. A separate ngspice 42 experiment evaluates a representative CMOS communication path using the exact committed 45-nm PTM card. Raw inputs, outputs, scripts, processed CSVs, checksums, and validators are retained in the repository.
 
-The principal architecture result is now an 8.36%-69.27% modeled energy-reduction range across five workloads. Timeloop cycles and utilization are unchanged within every pair. The expanded data also correct an earlier oversimplification: the scalar tensor-intensity indicator does not predict localization benefit. The revised discussion instead traces the variation to the fraction of planar energy associated with the substituted highest memory level.
+The principal result is now a controlled memory-localization study motivated by the proposed 3D organization, not a claim that Timeloop physically models a 3D stack. Across five workloads, the external-LPDDR4-to-localized-SRAM substitution produces an 8.36%-69.27% modeled energy-reduction range. Timeloop cycles and utilization are unchanged within every pair. The expanded data also correct an earlier oversimplification: the scalar tensor-intensity indicator does not predict localization benefit. Within the five evaluated mappings, the fraction of planar energy exposed at the substituted highest memory level is the primary observed mechanism and closely tracks the benefit.
 
 ## Reviewer 1
 
@@ -14,7 +14,7 @@ The principal architecture result is now an 8.36%-69.27% modeled energy-reductio
 
 **Response:** We replaced the analytical-only evaluation with two established simulation paths. Timeloop supplies mappings, cycles, utilization, computes, and memory actions. Accelergy combines those actions with component energy-reference tables, and the SRAM entries are generated through the Accelergy CACTI plug-in. The architecture study contains five planar/localized workload pairs. A separate ngspice 42 transient study evaluates an identical transistor-level driver/link/receiver path as capacitance changes. The paths are not co-simulated or numerically combined. The manuscript identifies these results as modeled/simulated quantities and does not claim RTL, post-layout, or fabricated-silicon validation.
 
-**Location in revised manuscript:** Sections IV-A-IV-L; Figs. 2-7; Tables II-IV; Supplement S1-S13.
+**Location in revised manuscript:** Sections III-B and IV-A-IV-L; Figs. 2-8; Tables II-IV; Supplement S1-S13.
 
 ### Comment 2
 
@@ -38,9 +38,9 @@ We use “AlexNet-derived dense” for CONV2, CONV4, and CONV5 because the evalu
 
 **Reviewer comment:** The figures are schematic and do not provide quantitative evidence.
 
-**Response:** The main paper now contains four quantitative figures in addition to three compact technical schematics: five-workload total energy, localized-SRAM capacity sensitivity, link switching energy versus capacitance, and link delay versus capacitance. The supplement adds intensity-versus-reduction, energy per compute, component-energy breakdown, and external-DRAM-action figures. Every plot is generated from committed CSV data and is available as PDF, SVG, and high-resolution PNG.
+**Response:** The main paper now contains five quantitative figures in addition to three compact technical schematics: five-workload total energy, all-workload component-energy breakdown, localized-SRAM capacity sensitivity, representative-link switching energy versus capacitance, and representative-link delay versus capacitance. The supplement includes a two-panel descriptive comparison of highest-memory energy share and tensor intensity against reduction, energy per compute, and external-DRAM actions. Every plot is generated from committed CSV data and is available as PDF, SVG, and high-resolution PNG. No trend is fitted to the five-sample comparison.
 
-**Location:** Figs. 4-7; Supplementary Figs. S1-S4; `figure_data/`; `scripts/generate_submission_figures.py`.
+**Location:** Figs. 4-8; Supplementary Figs. S1, S2, and S4; `figure_data/`; `scripts/generate_submission_figures.py`.
 
 ### Comment 5
 
@@ -80,9 +80,9 @@ We use “AlexNet-derived dense” for CONV2, CONV4, and CONV5 because the evalu
 
 **Reviewer comment:** Please characterize workload arithmetic intensity or memory sensitivity.
 
-**Response:** We report a deterministic tensor-intensity indicator, MACs divided by the combined weight/input/output tensor-element count. The five-workload results show that this scalar is insufficient: CONV3, dense CONV4, and dense CONV5 have similar indicator values (147.40-151.70) but reductions of 8.36%-36.71%. We therefore avoid a trend fit or causal intensity claim. Component accounting provides the stronger explanation: planar highest-level memory contributes 11.06%, 47.10%, and 48.89% of total energy in these three cases, respectively. Across all five workloads, the replaceable planar-memory share ranges from 11.06% to 92.26% and directly accounts for the observed benefit under the controlled substitution.
+**Response:** We report a deterministic tensor-intensity indicator, MACs divided by the combined weight/input/output tensor-element count. The five-workload results show that this scalar is insufficient: AlexNet CONV3, AlexNet-derived dense CONV4, and AlexNet-derived dense CONV5 have similar indicator values (147.40-151.70) but reductions of 8.36%-36.71%. We therefore avoid a trend fit, causal intensity claim, or statistical generalization from five samples. Component accounting provides the stronger bounded interpretation: planar highest-level memory contributes 11.06%, 47.10%, and 48.89% of total energy in these three cases, respectively. Across all five workloads, the exposed planar-memory share ranges from 11.06% to 92.26% and closely tracks the observed benefit under the controlled substitution.
 
-**Location:** Sections IV-B, V-B, V-C; Table I; Figs. S1 and S3.
+**Location:** Sections IV-B, V-B, V-C; Table I; main Fig. 5 and Supplementary Fig. S1.
 
 ### Comment 4
 
@@ -122,9 +122,9 @@ We use “AlexNet-derived dense” for CONV2, CONV4, and CONV5 because the evalu
 
 **Reviewer comment:** Quantitative comparisons and sensitivity evidence are insufficient.
 
-**Response:** The main paper includes a four-point 2-16-MiB localized-SRAM capacity sweep and five-point link-capacitance sweeps for switching energy and delay. For CONV1, localized total energy increases from 2,256.65 uJ at 2 MiB to 5,217.29 uJ at 16 MiB, reducing the benefit from 69.27% to 28.95%. Link energy and mean delay are monotonic over 5-160 fF. All plotted points are parsed or deterministically copied from validated simulator outputs.
+**Response:** The main paper includes a four-point 2-16-MiB localized-SRAM capacity sweep and five-point representative-link capacitance sweeps for switching energy and delay. For CONV1, localized total energy increases from 2,256.65 uJ at 2 MiB to 5,217.29 uJ at 16 MiB, reducing the benefit from 69.27% to 28.95%. This now supports an explicit sizing implication: localization benefit depends on selecting SRAM capacity for the working set because larger modeled arrays incur greater access energy. Link energy and mean delay are monotonic over 5-160 fF. The reported 63.77% energy and 46.38% delay reductions apply only to the representative 160-fF planar-link proxy versus the literature-referenced 40-fF TSV case. All plotted points are parsed or deterministically copied from validated simulator outputs.
 
-**Location:** Sections V-E-V-G; Figs. 5-7; Table IV.
+**Location:** Sections V-E-V-G; Figs. 6-8; Table IV.
 
 ### Comment 4
 

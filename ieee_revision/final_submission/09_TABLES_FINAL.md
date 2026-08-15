@@ -45,7 +45,7 @@ Intensity is MACs divided by the combined weight/input/output tensor-element cou
 |---|---:|---:|---:|---:|---:|---:|
 | Conservative planar-link proxy | 160 fF | 65 mOhm | 95.489 fJ | 29.693 ps | 25.042 ps | 27.367 ps |
 | TSV reference | 40 fF | 65 mOhm | 34.598 fJ | 14.946 ps | 14.405 ps | 14.675 ps |
-| Relative reduction | 75.00% capacitance | - | 63.77% | - | - | 46.38% |
+| Literature-referenced 40-fF TSV case relative to conservative 160-fF planar-link proxy | 75.00% lower capacitance | - | 63.77% lower | - | - | 46.38% lower |
 
 ## TABLE V. Qualitative prior-work positioning
 

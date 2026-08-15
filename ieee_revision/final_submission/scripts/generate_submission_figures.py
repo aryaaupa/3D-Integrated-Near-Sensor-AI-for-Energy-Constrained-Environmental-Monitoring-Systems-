@@ -58,7 +58,8 @@ def paired():
     rows = read("architecture_results.csv")
     order = list(dict.fromkeys(r["workload"] for r in rows))
     labels = [next(r["label"] for r in rows if r["workload"] == w) for w in order]
-    short = ["CONV1", "Dense CONV2", "CONV3", "Dense CONV4", "Dense CONV5"]
+    short = ["AlexNet\nCONV1", "AlexNet-derived\ndense CONV2", "AlexNet\nCONV3",
+             "AlexNet-derived\ndense CONV4", "AlexNet-derived\ndense CONV5"]
     planar = [next(r for r in rows if r["workload"] == w and r["architecture"] == "Planar") for w in order]
     local = [next(r for r in rows if r["workload"] == w and r["architecture"] == "Localized") for w in order]
     return order, labels, short, planar, local
@@ -89,7 +90,42 @@ def figure4_energy():
     save(fig, MAIN, "fig4_five_workload_energy")
 
 
-def figure5_capacity():
+def figure5_component_energy():
+    order, _, labels, planar, local = paired()
+    fig, ax = plt.subplots(figsize=(7.0, 2.75))
+    width = 0.32
+    positions = []
+    tick_positions = []
+    for i, (p_row, l_row) in enumerate(zip(planar, local)):
+        for j, row in enumerate((p_row, l_row)):
+            x = i + (-width / 2 if j == 0 else width / 2)
+            positions.append(x)
+            highest = float(row["highest_level_energy_uJ"])
+            lower = float(row["lower_buffer_energy_uJ"])
+            compute = float(row["compute_energy_uJ"])
+            ax.bar(x, highest, width, color=ORANGE if j == 0 else BLUE,
+                   edgecolor=DARK, linewidth=0.4,
+                   label=("Highest memory: LPDDR4" if i == 0 and j == 0 else
+                          "Highest memory: localized SRAM" if i == 0 and j == 1 else None))
+            ax.bar(x, lower, width, bottom=highest, color="#CBD3D8",
+                   edgecolor=DARK, linewidth=0.4,
+                   label="Unchanged lower buffers" if i == 0 and j == 0 else None)
+            ax.bar(x, compute, width, bottom=highest + lower, color="#66736B",
+                   edgecolor=DARK, linewidth=0.4,
+                   label="Unchanged compute" if i == 0 and j == 0 else None)
+        tick_positions.append(i)
+    ax.set_xticks(tick_positions, [f"{label}\nP        L" for label in labels])
+    ax.set_ylabel("Component energy (uJ)")
+    ax.set_ylim(0, 7800)
+    ax.set_xlim(-0.55, 4.55)
+    ax.legend(frameon=False, ncol=2, loc="upper right", columnspacing=1.0,
+              handlelength=1.4)
+    style(ax)
+    fig.subplots_adjust(left=0.085, right=0.995, bottom=0.18, top=0.98)
+    save(fig, MAIN, "fig5_component_energy")
+
+
+def figure6_capacity():
     rows = read("capacity_sensitivity.csv")
     x = [int(r["capacity_MiB"]) for r in rows]
     y = [float(r["total_energy_uJ"]) for r in rows]
@@ -108,7 +144,7 @@ def figure5_capacity():
     for a, b, r in zip(x, y, reduction):
         ax.annotate(f"{r:.1f}%", (a, b), xytext=(0, 6),
                     textcoords="offset points", ha="center", fontsize=6.1)
-    save(fig, MAIN, "fig5_capacity_sensitivity")
+    save(fig, MAIN, "fig6_capacity_sensitivity")
 
 
 def link_plot(metric, ylabel, stem):
@@ -135,19 +171,36 @@ def supplementary():
     order, _, labels, planar, local = paired()
     comparison = {r["workload"]: r for r in read("comparison.csv")}
 
-    fig, ax = plt.subplots(figsize=(3.5, 2.45))
-    x = [float(r["intensity"]) for r in planar]
-    y = [float(comparison[w]["energy_reduction_percent"]) for w in order]
-    ax.scatter(x, y, s=27, color=BLUE, edgecolors=DARK, linewidths=0.45)
-    offsets = [(4,-10),(-4,5),(4,-10),(4,5),(4,5)]
-    aligns = ["left","right","left","left","left"]
-    for label, a, b, off, align in zip(labels, x, y, offsets, aligns):
-        ax.annotate(label, (a,b), xytext=off, textcoords="offset points",
-                    ha=align, fontsize=5.8)
-    ax.set_xlabel("Architecture-oriented intensity (MACs/tensor element)")
-    ax.set_ylabel("Planar-to-localized energy reduction (%)")
-    ax.set_ylim(0, 75); style(ax)
-    save(fig, SUPP, "figS1_intensity_vs_reduction")
+    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.55), sharey=True)
+    reduction = [float(comparison[w]["energy_reduction_percent"]) for w in order]
+    x_values = [
+        [float(comparison[w]["planar_highest_level_energy_share_percent"]) for w in order],
+        [float(r["intensity"]) for r in planar],
+    ]
+    x_labels = [
+        "Planar highest-memory energy fraction (%)",
+        "Tensor-intensity indicator (MACs/tensor element)",
+    ]
+    panel_titles = ["(a) Exposed highest-memory fraction", "(b) Tensor-intensity indicator"]
+    offsets = [[(-4,-16),(-4,5),(4,-10),(4,12),(4,-18)],
+               [(4,-16),(-4,5),(4,-10),(4,-20),(4,8)]]
+    aligns = [["right","right","left","left","left"],
+              ["left","right","left","left","left"]]
+    for ax, x, xlabel, title, offs, has in zip(
+            axes, x_values, x_labels, panel_titles, offsets, aligns):
+        ax.scatter(x, reduction, s=28, color=BLUE, edgecolors=DARK, linewidths=0.45)
+        for label, a, b, off, align in zip(labels, x, reduction, offs, has):
+            ax.annotate(label, (a, b), xytext=off, textcoords="offset points",
+                        ha=align, fontsize=5.6)
+        ax.set_xlabel(xlabel)
+        ax.set_title(title, fontsize=7, fontweight="bold")
+        ax.set_ylim(0, 75)
+        style(ax)
+    axes[0].set_ylabel("Planar-to-localized total-energy reduction (%)")
+    fig.text(0.5, 0.01, "Five evaluated workloads; points are descriptive and no trend is fitted.",
+             ha="center", va="bottom", fontsize=6.0, color=DARK)
+    fig.subplots_adjust(left=0.08, right=0.995, bottom=0.23, top=0.90, wspace=0.22)
+    save(fig, SUPP, "figS1_mechanism_comparison")
 
     fig, ax = plt.subplots(figsize=(7.0, 2.5)); width=0.31; xx=list(range(5))
     p=[float(r["energy_per_compute_pJ"]) for r in planar]
@@ -157,20 +210,6 @@ def supplementary():
     ax.set_xticks(xx,labels); ax.set_ylabel("Energy per compute (pJ)")
     ax.legend(frameon=False,ncol=2); style(ax)
     save(fig,SUPP,"figS2_energy_per_compute")
-
-    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.6), sharey=True)
-    for ax, architecture, selected in zip(axes,["Planar","Localized"],[planar,local]):
-        h=[float(r["highest_level_energy_uJ"]) for r in selected]
-        b=[float(r["lower_buffer_energy_uJ"]) for r in selected]
-        c=[float(r["compute_energy_uJ"]) for r in selected]
-        ax.bar(range(5),h,color=ORANGE,edgecolor=DARK,linewidth=.35,label="Highest memory")
-        ax.bar(range(5),b,bottom=h,color=BLUE,edgecolor=DARK,linewidth=.35,label="Lower buffers")
-        ax.bar(range(5),c,bottom=[a+d for a,d in zip(h,b)],color="#8B9A8F",edgecolor=DARK,linewidth=.35,label="Compute")
-        ax.set_xticks(range(5),labels,rotation=18,ha="right"); ax.set_title(architecture,fontsize=7,fontweight="bold")
-        style(ax)
-    axes[0].set_ylabel("Component energy (uJ)")
-    axes[1].legend(frameon=False,fontsize=5.8)
-    save(fig,SUPP,"figS3_component_energy")
 
     fig, ax = plt.subplots(figsize=(7.0,2.45))
     accesses=[int(r["external_dram_accesses"]) for r in planar]
@@ -183,9 +222,9 @@ def supplementary():
 
 
 def main():
-    figure4_energy(); figure5_capacity()
-    link_plot("energy_per_toggle_fJ", "Supply energy per toggle (fJ)", "fig6_link_energy")
-    link_plot("mean_delay_ps", "Mean propagation delay (ps)", "fig7_link_delay")
+    figure4_energy(); figure5_component_energy(); figure6_capacity()
+    link_plot("energy_per_toggle_fJ", "Supply energy per toggle (fJ)", "fig7_link_energy")
+    link_plot("mean_delay_ps", "Mean propagation delay (ps)", "fig8_link_delay")
     supplementary()
 
 

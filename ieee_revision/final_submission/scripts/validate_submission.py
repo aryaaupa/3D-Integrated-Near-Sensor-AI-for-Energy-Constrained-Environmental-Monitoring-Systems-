@@ -66,11 +66,18 @@ def main():
     require(math.isclose(er, 63.7672925677, abs_tol=1e-8), "nominal link-energy reduction")
     require(math.isclose(dr, 46.3758882922, abs_tol=1e-8), "nominal link-delay reduction")
 
+    for row in arch:
+        component_sum = (float(row["highest_level_energy_uJ"]) +
+                         float(row["lower_buffer_energy_uJ"]) +
+                         float(row["compute_energy_uJ"]))
+        require(math.isclose(component_sum, float(row["total_energy_uJ"]), abs_tol=0.02),
+                f"{row['workload']} {row['architecture']} component sum")
+
     main_stems = ["fig1_architecture", "fig2_controlled_comparison", "fig3_methodology",
-                  "fig4_five_workload_energy", "fig5_capacity_sensitivity",
-                  "fig6_link_energy", "fig7_link_delay"]
-    supp_stems = ["figS1_intensity_vs_reduction", "figS2_energy_per_compute",
-                  "figS3_component_energy", "figS4_external_dram_actions"]
+                  "fig4_five_workload_energy", "fig5_component_energy",
+                  "fig6_capacity_sensitivity", "fig7_link_energy", "fig8_link_delay"]
+    supp_stems = ["figS1_mechanism_comparison", "figS2_energy_per_compute",
+                  "figS4_external_dram_actions"]
     for directory, stems in ((ROOT / "figures/main", main_stems), (ROOT / "figures/supplementary", supp_stems)):
         for stem in stems:
             for suffix in ("pdf", "svg", "png"):
@@ -89,11 +96,16 @@ def main():
     require(references == set(range(1, 19)), "references are unique and contiguous [1]-[18]")
     require(citations == references, "every reference is cited and every citation resolves")
 
-    require(manuscript.count("**Fig. ") == 7, "seven main figure captions")
+    require(manuscript.count("**Fig. ") == 8, "eight main figure captions")
     require(manuscript.count("**TABLE ") == 5, "five main tables")
     require("AlexNet CONV2 |" not in manuscript, "CONV2 is not mislabeled as canonical")
     require("AlexNet CONV4 |" not in manuscript, "CONV4 is not mislabeled as canonical")
     require("AlexNet CONV5 |" not in manuscript, "CONV5 is not mislabeled as canonical")
+    for layer in (2, 4, 5):
+        require(not re.search(rf"(?<!AlexNet-derived )dense CONV{layer}", manuscript),
+                f"CONV{layer} dense label carries AlexNet-derived qualifier")
+        require(not re.search(rf"(?<!dense )CONV{layer}", manuscript),
+                f"CONV{layer} is never presented without dense qualifier")
 
     prohibited_positive = [
         r"demonstrat(?:e|es|ed) thermal improvement",
@@ -105,6 +117,8 @@ def main():
         r"thermal uniformity improvement",
         r"60-80%",
         r"45-70%",
+        r"direct explanatory variable",
+        r"directly accounts for",
     ]
     for pattern in prohibited_positive:
         require(not re.search(pattern, manuscript, flags=re.IGNORECASE), f"unsupported phrase absent: {pattern}")
@@ -112,6 +126,12 @@ def main():
     require("No co-simulation" not in manuscript, "no misleading co-simulation label")
     require("not co-simulated" in manuscript, "independent evaluation boundary stated")
     require("no sensing-accuracy-versus-temperature" not in manuscript.lower(), "temperature boundary uses scientific prose")
+    require("memory-technology-and-placement proxy" in manuscript, "SRAM-versus-DRAM confounding disclosed")
+    require("not a general statistical law" in manuscript, "five-sample statistical boundary stated")
+    require("not a generic planar-versus-3D hardware result" in manuscript,
+            "representative circuit comparison bounded")
+    require("not bandwidth-aware system or inference latency" in manuscript,
+            "circuit delay is not labeled as inference latency")
 
     required_files = [
         "01_MANUSCRIPT_FINAL.md", "02_MANUSCRIPT_COPY_PASTE.txt",

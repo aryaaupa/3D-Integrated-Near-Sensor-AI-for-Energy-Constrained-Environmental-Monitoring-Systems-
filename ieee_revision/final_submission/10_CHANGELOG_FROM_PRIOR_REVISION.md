@@ -3,7 +3,7 @@
 ## Scientific reconstruction
 
 - Replaced the two-workload architecture narrative with five validated planar/localized workload pairs.
-- Added AlexNet CONV3 and AlexNet-derived dense CONV4 and dense CONV5.
+- Added AlexNet CONV3, AlexNet-derived dense CONV4, and AlexNet-derived dense CONV5.
 - Corrected terminology so CONV2, CONV4, and CONV5 are not presented as canonical grouped AlexNet layers.
 - Changed the headline architecture result from two isolated reductions to the verified 8.36%-69.27% range.
 - Retained and discussed the 8.36% CONV3 result as evidence of workload dependence.
@@ -23,7 +23,8 @@
 
 ## Figures and tables
 
-- Rebuilt the main figure sequence as three scientific schematics plus four quantitative figures.
+- Hardened the main figure sequence as three scientific schematics plus five quantitative figures, promoting the all-workload component-energy breakdown to main Fig. 5.
+- Replaced the single intensity scatter with a two-panel descriptive comparison of exposed highest-memory energy fraction and tensor intensity against reduction; no trend is fitted.
 - Replaced the two-workload energy plot with a five-workload grouped bar chart.
 - Moved energy-per-compute, intensity scatter, component breakdown, and external-DRAM activity to the supplement.
 - Added vector SVG output and 600-dpi PNG output for every generated quantitative figure.

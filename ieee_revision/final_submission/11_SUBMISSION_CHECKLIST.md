@@ -49,7 +49,7 @@ The current repository does not establish the portal's exact file requirements. 
 - [ ] Do not rename dense CONV2/4/5 as canonical AlexNet layers.
 - [ ] Do not describe 160 fF as measured bump capacitance.
 - [ ] Do not describe Timeloop cycles as improved or reduced.
-- [ ] Do not combine 63.77% link energy with the architecture energy reductions.
+- [ ] Keep the 63.77% representative-path energy reduction explicitly bounded to the conservative 160-fF planar-link proxy versus literature-referenced 40-fF TSV case; do not combine it with architecture energy reductions.
 - [ ] Do not add a sensing-accuracy-versus-temperature curve without a new sensor experiment.
 - [ ] Check final IEEE-template pagination, column breaks, table width, and figure legibility.
 - [ ] Confirm all references appear in the template bibliography and every in-text citation resolves.
