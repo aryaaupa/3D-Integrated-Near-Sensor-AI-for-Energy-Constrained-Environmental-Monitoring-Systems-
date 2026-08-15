@@ -1,0 +1,9 @@
+architecture,level,component,placement
+Planar,1,LPDDR4,External
+Planar,2,128-KiB global SRAM,On accelerator
+Planar,3,PE register files,Per PE
+Planar,4,168 MAC units,14 by 12 array
+Localized,1,2-MiB stacked SRAM,On stack
+Localized,2,128-KiB global SRAM,On accelerator
+Localized,3,PE register files,Per PE
+Localized,4,168 MAC units,14 by 12 array

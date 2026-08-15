@@ -1,0 +1,9 @@
+path,order,node,output
+Architecture,1,AlexNet layer YAML,Workload dimensions
+Architecture,2,Timeloop,Mapping cycles utilization and activity
+Architecture,3,Accelergy plus CACTI,Component energies
+Architecture,4,Parser and validator,CSV results and traceability
+Circuit,1,PTM model plus link netlist,Device and interconnect parameters
+Circuit,2,ngspice 42,Transient waveforms and measures
+Circuit,3,Parser and validator,Energy per toggle and delay
+Circuit,4,Cross-level interpretation,Bounded architectural conclusions

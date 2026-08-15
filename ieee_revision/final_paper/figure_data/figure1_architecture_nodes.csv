@@ -1,0 +1,4 @@
+order,tier,role
+1,Sensor tier,Acquire and digitize observations
+2,Localized-memory tier,Retain weights and activations near compute
+3,Compute tier,Execute fixed-mapping convolution
